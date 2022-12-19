@@ -1,0 +1,18 @@
+body {
+  width: 100vw;
+  height: 100vw;
+  background: linear-gradient(165deg, #527785 0%, #7FB4C7 100%);
+  padding: 1%;
+  overflow: hidden;
+}
+
+#cloud-circle {
+    width: 500px;
+    height: 275px;
+    border-radius: 50%;
+    filter: url(#filter);
+    box-shadow: 400px 400px 60px 0px #fff;
+    position: absolute;
+    top: -320px;
+    left: -320px;
+}

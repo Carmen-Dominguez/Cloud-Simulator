@@ -1,0 +1,17 @@
+{
+  "name": "cloud_simulator",
+  "version": "1.0.0",
+  "description": "A visual cloud simulator",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve --mode development",
+    "test": "test"
+  },
+  "author": "Carmen Dominguez",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  }
+}
