@@ -1,9 +1,20 @@
 body {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(0deg, #62a0d8 0%, #2178d1 50%, #085cb3 100%);
   padding: 1%;
   overflow: hidden;
+}
+
+#day {
+  background: linear-gradient(to top, #283E51, #0A2342);
+}
+
+#twilight {
+  background: linear-gradient(0deg, #FFA69E 0%, #BD4F6C 50%, #861657 100%);
+}
+
+#night {
+  background: linear-gradient(to top, #283E51, #0A2342);
 }
 
 .cloud {
