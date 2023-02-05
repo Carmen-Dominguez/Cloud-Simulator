@@ -1,16 +1,13 @@
-<html>
-  <head>
-    <script src="./bundle.js"></script>
-    <link rel="stylesheet" href="./index.css" />
-  </head>
-  <body>
-    <body id="twilight">
-      <div class="cloud" id="cloud-back"></div>
-      <div class="cloud" id="cloud-mid"></div>
-      <div class="cloud" id="cloud-front"></div>
-      <!--   77, 327,109, 841, 2319, 5032, 1094, 892, 6739, 512, 84 -->
+import React from "react";
+
+export default function App() {
+  return (
+    <div id={"twilight"}>
+      <div className="cloud" id="cloud-back"></div>
+      <div className="cloud" id="cloud-mid"></div>
+      <div className="cloud" id="cloud-front"></div>
+
       <svg width="0" height="0">
-        <!--Top Layer-->
         <filter id="filter-back">
           <feTurbulence
             type="fractalNoise"
@@ -39,6 +36,6 @@
           <feDisplacementMap in="SourceGraphic" scale="100" />
         </filter>
       </svg>
-    </body>
-  </body>
-</html>
+    </div>
+  );
+}
