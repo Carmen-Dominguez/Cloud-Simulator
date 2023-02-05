@@ -1,0 +1,44 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  padding: 1%;
+  overflow: hidden;
+}
+
+#day {
+  background: linear-gradient(to top, #283e51, #0a2342);
+}
+
+#twilight {
+  background: linear-gradient(0deg, #ffa69e 0%, #bd4f6c 50%, #861657 100%);
+}
+
+#night {
+  background: linear-gradient(to top, #283e51, #0a2342);
+}
+
+.cloud {
+  width: 500px;
+  height: 275px;
+  border-radius: 50%;
+  position: absolute;
+  top: -35vh;
+  left: -25vw;
+}
+
+#cloud-back {
+  filter: url(#filter-back);
+  box-shadow: 300px 300px 30px -20px #fff;
+}
+
+#cloud-mid {
+  filter: url(#filter-mid);
+  box-shadow: 300px 340px 70px -60px rgba(158, 168, 179, 0.5);
+  left: -25vw;
+}
+
+#cloud-front {
+  filter: url(#filter-front);
+  box-shadow: 300px 370px 60px -100px rgba(0, 0, 0, 0.3);
+  left: -25vw;
+}
