@@ -1,4 +1,5 @@
 import React, { FC, ReactNode } from "react";
+import styles from "./Sky.module.scss";
 
 type Props = {
   time: "day" | "twilight" | "night";
@@ -6,5 +7,5 @@ type Props = {
 };
 
 export const Sky: FC<Props> = ({ time, children }: Props) => (
-  <div id={time}>{children}</div>
+  <div className={styles[time]}>{children}</div>
 );
