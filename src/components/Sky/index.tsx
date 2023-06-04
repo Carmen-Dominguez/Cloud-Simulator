@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from "react";
 
 type Props = {
-  time: string;
+  time: "day" | "twilight" | "night";
   children: ReactNode;
 };
 
