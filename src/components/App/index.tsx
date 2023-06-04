@@ -5,7 +5,7 @@ import { Sky } from "../Sky";
 export default function App() {
   return (
     <Sky time={"twilight"}>
-      <Cloud seedNumber={7} numOctaves={5} />
+      <Cloud seedNumber={7} numOctaves={5} time={"day"} />
     </Sky>
   );
 }
