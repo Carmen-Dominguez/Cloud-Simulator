@@ -1,3 +1,6 @@
+var path = require('path');
+var webpack = require('webpack');
+
 module.exports = {
   // 1
   entry: './src/index.js',
@@ -9,5 +12,11 @@ module.exports = {
   // 3
   devServer: {
     static: './dist'
-  }
+  },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".css", ".scss"]
+  },
+  module: {
+    rules: []
+  },
 };
