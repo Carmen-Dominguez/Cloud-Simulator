@@ -1,15 +1,17 @@
 import React from "react";
+import styles from "./Cloud.module.scss";
 
 type Props = {
   seedNumber: number;
   numOctaves: number;
+  time: "day" | "twilight" | "night";
 };
 
-export const Cloud = ({ seedNumber, numOctaves }: Props) => (
-  <>
-    <div className="cloud" id="cloud-back"></div>
-    <div className="cloud" id="cloud-mid"></div>
-    <div className="cloud" id="cloud-front"></div>
+export const Cloud = ({ seedNumber, numOctaves, time }: Props) => (
+  <div className={styles[time]}>
+    <div className={`${styles.cloud} ${styles.cloudBack}`}></div>
+    <div className={`${styles.cloud} ${styles.cloudMid}`}></div>
+    <div className={`${styles.cloud} ${styles.cloudFront}`}></div>
 
     <svg width="0" height="0">
       <filter id="filter-back">
@@ -40,5 +42,5 @@ export const Cloud = ({ seedNumber, numOctaves }: Props) => (
         <feDisplacementMap in="SourceGraphic" scale="100" />
       </filter>
     </svg>
-  </>
+  </div>
 );
