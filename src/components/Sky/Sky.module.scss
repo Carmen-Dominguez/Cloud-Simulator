@@ -25,7 +25,7 @@ body {
   @function star-position($n) {
     $value: "center center";
     @for $i from 2 through $n {
-      $value: "#{$value}, #{polarity()}#{random(500)}px #{polarity()}#{random(500)}px";
+      $value: "#{$value}, #{polarity()}#{random(1000)}px #{polarity()}#{random(1000)}px";
     }
 
     @return unquote($value);
@@ -42,9 +42,9 @@ body {
     @return unquote($value);
   }
 
-  height: 100vh;
-  background-image: star(12);
-  background-position: star-position(12);
+  height: 100%;
+  background-image: star(25);
+  background-position: star-position(25);
   background-size: 100%;
-  background-repeat: no-repeat;
+  background-repeat: repeat-x;
 }
