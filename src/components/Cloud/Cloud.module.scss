@@ -31,21 +31,22 @@
 .twilight {
   .cloudBack {
     filter: url(#filter-back);
-    box-shadow: 300px 300px 30px -20px #fff;
+    box-shadow: 300px 300px 30px -20px #1a1236;
+    opacity: 0.5;
   }
 
   .cloudMid {
     filter: url(#filter-mid);
-    box-shadow: 300px 340px 70px -60px #9ea8b3;
+    box-shadow: 300px 340px 70px -60px #9f4f37;
     left: -25vw;
     opacity: 0.5;
   }
 
   .cloudFront {
     filter: url(#filter-front);
-    box-shadow: 300px 370px 60px -100px #000000;
+    box-shadow: 300px 370px 60px -100px #fed6a6;
     left: -25vw;
-    opacity: 0.3;
+    opacity: 0.8;
   }
 }
 
