@@ -13,6 +13,38 @@ body {
 }
 
 .night {
-  background: linear-gradient(to top, #283e51, #00001c);
+  @function polarity() {
+    $value: random(2);
+
+    @if $value == 1 {
+      @return "-";
+    }
+    @return "";
+  }
+
+  @function star-position($n) {
+    $value: "center center";
+    @for $i from 2 through $n {
+      $value: "#{$value}, #{polarity()}#{random(500)}px #{polarity()}#{random(500)}px";
+    }
+
+    @return unquote($value);
+  }
+
+  @function star($n) {
+    $value: "radial-gradient(white,rgba(255, 255, 255, 0.3) 2px,transparent 1px)";
+    @for $i from 2 through $n {
+      $value: "#{$value}, radial-gradient(white,rgba(255, 255, 255, 0.#{random(4)}) #{random(4)}px,transparent #{random(15)}px)";
+    }
+
+    $value: "#{$value}, linear-gradient(to top, #283e51, #00001c)";
+
+    @return unquote($value);
+  }
+
   height: 100vh;
+  background-image: star(12);
+  background-position: star-position(12);
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
