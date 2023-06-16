@@ -1,10 +1,11 @@
 import React from "react";
 import styles from "./Cloud.module.scss";
+import { AppState } from "../../reducer";
 
 type Props = {
   seedNumber: number;
   numOctaves: number;
-  time: "day" | "twilight" | "night";
+  time: AppState["TimeState"];
 };
 
 export const Cloud = ({ seedNumber, numOctaves, time }: Props) => {

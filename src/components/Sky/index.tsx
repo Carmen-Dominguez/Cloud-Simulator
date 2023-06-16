@@ -1,8 +1,9 @@
 import React, { FC, ReactNode } from "react";
 import styles from "./Sky.module.scss";
+import { AppState } from "../../reducer";
 
 type Props = {
-  time: "day" | "twilight" | "night";
+  time: AppState["TimeState"];
   children: ReactNode;
 };
 
