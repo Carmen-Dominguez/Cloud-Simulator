@@ -2,17 +2,35 @@ body {
   margin: 0;
 }
 
+.banana {
+  background-image: linear-gradient(#fff, #fefefe);
+  -webkit-transition: all 3s linear;
+  -moz-transition: all 3s linear;
+  -o-transition: all 3s linear;
+  transition: all 3s linear;
+}
+
 .day {
-  background: linear-gradient(to top, #a1cae0, #478bbe, #1d68aa);
+  background-image: linear-gradient(to top, #a1cae0, #478bbe, #1d68aa);
   height: 100vh;
 }
 
 .twilight {
-  background: linear-gradient(0deg, #f2b080 0%, #bd4f77 50%, #46466c 100%);
+  background-image: linear-gradient(
+    0deg,
+    #f2b080 0%,
+    #bd4f77 50%,
+    #46466c 100%
+  );
   height: 100vh;
 }
 
 .night {
+  -webkit-transition: all 3s linear;
+  -moz-transition: all 3s linear;
+  -o-transition: all 3s linear;
+  transition: all 3s linear;
+
   @function polarity() {
     $value: random(2);
 
@@ -25,7 +43,7 @@ body {
   @function star-position($n) {
     $value: "center center";
     @for $i from 2 through $n {
-      $value: "#{$value}, #{polarity()}#{random(1000)}px #{polarity()}#{random(1000)}px";
+      $value: "#{$value}, #{polarity()}#{random(800)}px #{polarity()}#{random(800)}px";
     }
 
     @return unquote($value);
@@ -45,6 +63,6 @@ body {
   height: 100vh;
   background-image: star(10);
   background-position: star-position(10);
-  background-size: 1000px 100%;
+  background-size: 800px 100%;
   background-repeat: repeat-x;
 }

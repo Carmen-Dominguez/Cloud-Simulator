@@ -8,5 +8,5 @@ type Props = {
 };
 
 export const Sky: FC<Props> = ({ time, children }: Props) => (
-  <div className={styles[time]}>{children}</div>
+  <div className={`${styles.banana} ${styles[time]}`}>{children}</div>
 );
