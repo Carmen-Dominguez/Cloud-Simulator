@@ -4,7 +4,7 @@
   border-radius: 50%;
   position: absolute;
   top: 5vh;
-  left: 5vw;
+  left: -5vw;
 }
 
 .day {
@@ -29,19 +29,19 @@
 .twilight {
   .cloudBack {
     filter: url(#filter-back);
-    box-shadow: 300px 300px 30px -20px #1a1236;
+    box-shadow: 300px 300px 30px -20px #403073;
     opacity: 0.5;
   }
 
   .cloudMid {
     filter: url(#filter-mid);
-    box-shadow: 300px 340px 70px -60px #9f4f37;
+    box-shadow: 300px 340px 70px -60px #c9667a;
     opacity: 0.5;
   }
 
   .cloudFront {
     filter: url(#filter-front);
-    box-shadow: 300px 370px 60px -100px #fed6a6;
+    box-shadow: 300px 370px 60px -100px #e5987e;
     opacity: 0.8;
   }
 }
