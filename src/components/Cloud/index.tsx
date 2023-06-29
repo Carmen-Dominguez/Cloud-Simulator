@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const Cloud = ({ seedNumber, numOctaves, time }: Props) => {
-  const random = Math.random() * (200 - 100) + 100;
+  const random = Math.random() * (250 - 100) + 100;
   const back = random;
   const mid = random - 20;
   const front = random - 40;
