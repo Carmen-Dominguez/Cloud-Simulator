@@ -9,7 +9,10 @@ type Props = {
 };
 
 export const Cloud = ({ seedNumber, numOctaves, time }: Props) => {
-  const randomiser = () => {};
+  const random = Math.random() * (200 - 100) + 100;
+  const back = random;
+  const mid = random - 20;
+  const front = random - 40;
 
   return (
     <div className={styles[time]}>
@@ -25,7 +28,7 @@ export const Cloud = ({ seedNumber, numOctaves, time }: Props) => {
             numOctaves={numOctaves}
             seed={seedNumber}
           />
-          <feDisplacementMap in="SourceGraphic" scale="170" />
+          <feDisplacementMap in="SourceGraphic" scale={back} />
         </filter>
         <filter id="filter-mid">
           <feTurbulence
@@ -34,7 +37,7 @@ export const Cloud = ({ seedNumber, numOctaves, time }: Props) => {
             numOctaves={numOctaves}
             seed={seedNumber}
           />
-          <feDisplacementMap in="SourceGraphic" scale="150" />
+          <feDisplacementMap in="SourceGraphic" scale={mid} />
         </filter>
         <filter id="filter-front">
           <feTurbulence
@@ -43,9 +46,12 @@ export const Cloud = ({ seedNumber, numOctaves, time }: Props) => {
             numOctaves={numOctaves}
             seed={seedNumber}
           />
-          <feDisplacementMap in="SourceGraphic" scale="130" />
+          <feDisplacementMap in="SourceGraphic" scale={front} />
         </filter>
       </svg>
     </div>
   );
 };
+function useState(arg0: number): [any, any] {
+  throw new Error("Function not implemented.");
+}
