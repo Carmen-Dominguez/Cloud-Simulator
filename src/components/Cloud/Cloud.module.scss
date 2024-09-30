@@ -1,10 +1,17 @@
+@keyframes move {
+  0% {left: calc(0% - 300px);}
+  100% {left: calc(100vw - 790px);}
+}
+
 .cloud {
   width: 500px;
   height: 275px;
   border-radius: 50%;
   position: absolute;
   top: 5vh;
-  left: -5vw;
+  left: calc(0% - 300px);
+  animation: move 20s infinite;
+  animation-direction: alternate;
 }
 
 .day {
@@ -56,7 +63,7 @@
   .cloudMid {
     filter: url(#filter-mid);
     box-shadow: 300px 340px 70px -60px #c9667a;
-    opacity: 0.5;
+    opacity: 0.8;
   }
 
   .cloudFront {
