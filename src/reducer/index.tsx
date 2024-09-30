@@ -1,7 +1,7 @@
 import React, { Reducer } from "react";
 
 export type AppState = {
-  TimeState: "day" | "twilight" | "night";
+  TimeState: "day" | "dusk" | "night" | "dawn";
   WeatherState: "clear" | "cloudy" | "rain" | "storm";
 };
 
@@ -17,21 +17,25 @@ export const reducer: Reducer<AppState, TimeEvent> = (
   let TimeState: AppState["TimeState"] = "day";
   let WeatherState: AppState["WeatherState"] = "clear";
 
-  console.log(state, event);
+  // console.log(state, event);
 
   switch (state.TimeState) {
     case "day":
-      if (event.TimePhase) TimeState = "twilight";
+      if (event.TimePhase) TimeState = "dusk";
       break;
 
-    case "twilight":
+    case "dusk":
       if (event.TimePhase && event.NextDay) {
         TimeState = "day";
       } else TimeState = "night";
       break;
 
     case "night":
-      if (event.TimePhase) TimeState = "twilight";
+      if (event.TimePhase) TimeState = "dawn";
+      break;
+
+    case "dawn":
+      if (event.TimePhase) TimeState = "day";
       break;
 
     default:

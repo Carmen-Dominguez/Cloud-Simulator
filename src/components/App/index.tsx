@@ -1,4 +1,4 @@
-import React, { Reducer, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { Cloud } from "../Cloud";
 import { Sky } from "../Sky";
 import { reducer, AppState, TimeEvent } from "../../reducer";
@@ -10,14 +10,20 @@ export default function App() {
     WeatherState: "clear",
   } as AppState);
 
+  useEffect(() => {
+    phaseTimer();
+  }, phase);
+
   function nextPhase() {
     dispatch({ TimePhase: true, NextDay: phase === 3 } as TimeEvent);
     setPhase(phase === 3 ? 0 : phase + 1);
   }
 
-  // setInterval(() => {
-  //   nextPhase();
-  // }, 5000);
+  function phaseTimer() {
+    setInterval(() => {
+      nextPhase();
+    }, 20000);
+  }
 
   return (
     <div onClick={nextPhase}>

@@ -26,7 +26,27 @@
   }
 }
 
-.twilight {
+.dusk {
+  .cloudBack {
+    filter: url(#filter-back);
+    box-shadow: 300px 300px 30px -20px #e5987e;
+    opacity: 0.5;
+  }
+
+  .cloudMid {
+    filter: url(#filter-mid);
+    box-shadow: 300px 340px 70px -60px #c9667a;
+    opacity: 0.5;
+  }
+
+  .cloudFront {
+    filter: url(#filter-front);
+    box-shadow: 300px 370px 60px -100px #403073;
+    opacity: 0.8;
+  }
+}
+
+.dawn {
   .cloudBack {
     filter: url(#filter-back);
     box-shadow: 300px 300px 30px -20px #403073;
