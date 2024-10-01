@@ -1,13 +1,20 @@
 import React, { useEffect, useReducer, useState } from "react";
-import { reducer, AppState, TimeEvent } from "../../reducer";
+import { reducer, AppState } from "../../reducer";
 import axios from "axios";
+import {
+  emptyTimeEventTimes,
+  TimeEvent,
+  TimeEventTimes,
+} from "src/models/models";
 
 export const TimeOfDay = async () => {
   const [state, dispatch] = useReducer(reducer, {
-    TimeState: "day",
-    WeatherState: "clear",
+    TimeEventTimes: emptyTimeEventTimes,
   } as AppState);
-  const [dayPhaseTimes, setDayPhaseTimes] = useState(null);
+  const date = new Date();
+  const currentData = `${date.getFullYear()}-${
+    date.getMonth() + 1
+  }-${date.getDate()}`;
 
   useEffect(() => {
     try {
@@ -16,13 +23,15 @@ export const TimeOfDay = async () => {
           params: {
             lat: "-33.92584",
             lng: "18.42322",
-            date_start: "2024-10-01",
-            date_end: "2024-10-01",
+            date_start: currentData,
+            date_end: currentData,
           },
         });
 
-        setDayPhaseTimes(response.data);
-        console.log(response);
+        dispatch({
+          TimeEventTimes: response.data.results[0] as TimeEventTimes,
+        } as TimeEvent);
+        console.log(response.data.results[0] as TimeEventTimes);
       };
 
       fetchData();
@@ -32,5 +41,3 @@ export const TimeOfDay = async () => {
     }
   }, []);
 };
-
-

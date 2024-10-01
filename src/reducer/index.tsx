@@ -1,16 +1,5 @@
 import React, { Reducer } from "react";
-
-export type AppState = {
-  TimeState: "day" | "dusk" | "night" | "dawn";
-  WeatherState: "clear" | "cloudy" | "rain" | "storm";
-  Timer: number;
-};
-
-export type TimeEvent = {
-  TimePhase: boolean; // when time moves forward to the next phase
-  NextDay: boolean; // to signify the a new day
-  Timer: number; // how long a timePhase lasts
-};
+import { AppState, emptyTimeEventTimes, TimeEvent } from "src/models/models";
 
 export const reducer: Reducer<AppState, TimeEvent> = (
   state: AppState,
@@ -19,8 +8,7 @@ export const reducer: Reducer<AppState, TimeEvent> = (
   let TimeState: AppState["TimeState"] = "day";
   let WeatherState: AppState["WeatherState"] = "clear";
   let Timer: AppState["Timer"] = 10;
-
-  // console.log(state, event);
+  let Times: AppState["TimeEventTimes"] = emptyTimeEventTimes;
 
   switch (state.TimeState) {
     case "day":
@@ -28,9 +16,7 @@ export const reducer: Reducer<AppState, TimeEvent> = (
       break;
 
     case "dusk":
-      if (event.TimePhase && event.NextDay) {
-        TimeState = "day";
-      } else TimeState = "night";
+      if (event.TimePhase) TimeState = "night";
       break;
 
     case "night":
@@ -45,5 +31,7 @@ export const reducer: Reducer<AppState, TimeEvent> = (
       TimeState = "day";
   }
 
-  return { TimeState, WeatherState, Timer } as unknown as AppState;
+  return { TimeState, WeatherState, Timer, Times } as unknown as AppState;
 };
+export type { AppState, TimeEvent };
+
