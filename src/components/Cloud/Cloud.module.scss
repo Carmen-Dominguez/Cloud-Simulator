@@ -3,6 +3,13 @@
   100% {left: calc(100vw - 790px);}
 }
 
+@mixin transition {
+  -webkit-transition: all 3s linear;
+  -moz-transition: all 3s linear;
+  -o-transition: all 3s linear;
+  transition: all 3s linear;
+}
+
 .cloud {
   width: 500px;
   height: 275px;
@@ -12,6 +19,7 @@
   left: calc(0% - 300px);
   animation: move 20s infinite;
   animation-direction: alternate;
+  @include transition();
 }
 
 .day {
