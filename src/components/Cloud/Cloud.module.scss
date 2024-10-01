@@ -4,10 +4,10 @@
 }
 
 @mixin transition {
-  -webkit-transition: all 3s linear;
-  -moz-transition: all 3s linear;
-  -o-transition: all 3s linear;
-  transition: all 3s linear;
+  -webkit-transition: all 8s linear;
+  -moz-transition: all 8s linear;
+  -o-transition: all 8s linear;
+  transition: all 8s linear;
 }
 
 .cloud {

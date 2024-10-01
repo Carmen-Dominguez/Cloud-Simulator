@@ -4,10 +4,10 @@ $dawn: linear-gradient( 0deg, #f2b080 0%, #bd4f77 50%, #46466c 100%);
 $night: linear-gradient(to top, #283e51, #00001c);
 
 @mixin transition {
-  -webkit-transition: opacity 3s linear;
-  -moz-transition: opacity 3s linear;
-  -o-transition: opacity 3s linear;
-  transition: opacity 3s linear;
+  -webkit-transition: opacity 8s linear;
+  -moz-transition: opacity 8s linear;
+  -o-transition: opacity 8s linear;
+  transition: opacity 8s linear;
 }
 
 @mixin dimension {
@@ -47,10 +47,10 @@ body {
   background-size: 800px 100%;
   background-repeat: repeat-x;
 
-  -webkit-transition: all 3s linear;
-  -moz-transition: all 3s linear;
-  -o-transition: all 3s linear;
-  transition: all 3s linear;
+  -webkit-transition: all 8s linear;
+  -moz-transition: all 8s linear;
+  -o-transition: all 8s linear;
+  transition: all 8s linear;
 
   @function polarity() {
     $value: random(2);
