@@ -2,6 +2,7 @@ import React, { useEffect, useReducer, useState } from "react";
 import { Cloud } from "../Cloud";
 import { Sky } from "../Sky";
 import { reducer, AppState, TimeEvent } from "../../reducer";
+import { TimeOfDay } from "src/api/Timer/Timer";
 
 export default function App() {
   const [phase, setPhase] = useState(0);
@@ -14,6 +15,8 @@ export default function App() {
     phaseTimer();
   }, phase);
 
+  TimeOfDay();
+
   function nextPhase() {
     dispatch({ TimePhase: true, NextDay: phase === 3 } as TimeEvent);
     setPhase(phase === 3 ? 0 : phase + 1);
@@ -22,7 +25,7 @@ export default function App() {
   function phaseTimer() {
     setInterval(() => {
       nextPhase();
-    }, 20000);
+    }, 10000);
   }
 
   return (
