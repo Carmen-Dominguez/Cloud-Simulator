@@ -1,3 +1,8 @@
+$day: linear-gradient(to top, #a1cae0, #478bbe, #1d68aa);
+$dusk: linear-gradient( 0deg, #46466c 0%, #bd4f77 50%, #f2b080 100%);
+$dawn: linear-gradient( 0deg, #f2b080 0%, #bd4f77 50%, #46466c 100%);
+$night: linear-gradient(to top, #283e51, #00001c);
+
 body {
   margin: 0;
 }
@@ -11,27 +16,17 @@ body {
 }
 
 .day {
-  background-image: linear-gradient(to top, #a1cae0, #478bbe, #1d68aa);
+  background-image: $day;
   height: 100vh;
 }
 
 .dawn {
-  background-image: linear-gradient(
-    0deg,
-    #f2b080 0%,
-    #bd4f77 50%,
-    #46466c 100%
-  );
+  background-image: $dawn;
   height: 100vh;
 }
 
 .dusk {
-  background-image: linear-gradient(
-    0deg,
-    #46466c 0%,
-    #bd4f77 50%,
-    #f2b080 100%,
-  );
+  background-image: $dusk;
   height: 100vh;
 }
 
@@ -65,7 +60,7 @@ body {
       $value: "#{$value}, radial-gradient(white,rgba(255, 255, 255, 0.#{random(4)}) #{random(4)}px,transparent #{random(15)}px)";
     }
 
-    $value: "#{$value}, linear-gradient(to top, #283e51, #00001c)";
+    $value: "#{$value}, #{$night}";
 
     @return unquote($value);
   }
