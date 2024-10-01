@@ -3,11 +3,13 @@ import React, { Reducer } from "react";
 export type AppState = {
   TimeState: "day" | "dusk" | "night" | "dawn";
   WeatherState: "clear" | "cloudy" | "rain" | "storm";
+  Timer: number;
 };
 
 export type TimeEvent = {
   TimePhase: boolean; // when time moves forward to the next phase
   NextDay: boolean; // to signify the a new day
+  Timer: number; // how long a timePhase lasts
 };
 
 export const reducer: Reducer<AppState, TimeEvent> = (
@@ -16,6 +18,7 @@ export const reducer: Reducer<AppState, TimeEvent> = (
 ) => {
   let TimeState: AppState["TimeState"] = "day";
   let WeatherState: AppState["WeatherState"] = "clear";
+  let Timer: AppState["Timer"] = 10;
 
   // console.log(state, event);
 
@@ -42,5 +45,5 @@ export const reducer: Reducer<AppState, TimeEvent> = (
       TimeState = "day";
   }
 
-  return { TimeState, WeatherState } as unknown as AppState;
+  return { TimeState, WeatherState, Timer } as unknown as AppState;
 };
