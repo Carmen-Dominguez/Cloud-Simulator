@@ -6,9 +6,8 @@ const date = new Date();
 const currentData = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
 export class Timer {
-  getTimes(): TimeEventTimes{
+  async getTimes() {
     try {
-      const fetchData = async () => {
         const response = await axios.get("https://api.sunrisesunset.io/json", {
           params: {
             lat: "-33.92584", // Cape Town
@@ -18,11 +17,7 @@ export class Timer {
           },
         });
 
-        console.log(response.data.results[0] as TimeEventTimes);
-        return response.data.results[0] as TimeEventTimes
-      };
-
-      fetchData();
+        return response;
     } catch (err: any) {
       console.error(err);
       return null;

@@ -16,6 +16,13 @@ export default function App() {
   } as AppState);
 
   useEffect(() => {
+    timer.getTimes().then(res => {
+      console.log('res', res.data.results[0]);
+      dispatch({ TimeEventTimes: res.data.results[0] } as TimeEvent);
+    })
+  }, [])
+
+  useEffect(() => {
     phaseTimer();
   }, [phase]);
 
