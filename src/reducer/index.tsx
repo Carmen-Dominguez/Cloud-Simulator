@@ -33,7 +33,6 @@ export const reducer: Reducer<AppState, TimeEvent> = (
   }
 
   if (event.TimeEventTimes) TimeEventTimes = event.TimeEventTimes;
-  console.log('returning this: ', { ...state, TimeState, WeatherState, Timer, TimeEventTimes })
 
   return { ...state, TimeState, WeatherState, Timer, TimeEventTimes } as unknown as AppState;
 };
