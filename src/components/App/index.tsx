@@ -8,7 +8,6 @@ import { emptyTimeEventTimes, TimeEventTimes } from "src/models/models";
 export default function App() {
   const timer = new Timer();
   const [phase, setPhase] = useState(0);
-  const [times, setTimes] = useState<TimeEventTimes>(emptyTimeEventTimes);
 
   const [state, dispatch] = useReducer(reducer, {
     TimeState: "day",
@@ -20,11 +19,6 @@ export default function App() {
     phaseTimer();
   }, [phase]);
 
-  useEffect(() => {
-    dispatch({ TimeEventTimes: times } as TimeEvent);
-    updateTimes();
-  }, [times]);
-
   // do the phases
   function nextPhase() {
     dispatch({ TimePhase: true, NextDay: phase === 3 } as TimeEvent);
@@ -35,17 +29,6 @@ export default function App() {
     setInterval(() => {
       nextPhase();
     }, 20000);
-  }
-
-  // get the times
-  function getTimes() {
-    setTimes(timer.getTimes());
-  }
-
-  function updateTimes() {
-    setInterval(() => {
-      getTimes();
-    }, 10000);
   }
 
   return (
