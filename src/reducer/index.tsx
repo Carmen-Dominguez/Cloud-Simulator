@@ -5,10 +5,11 @@ export const reducer: Reducer<AppState, TimeEvent> = (
   state: AppState,
   event: TimeEvent
 ) => {
+  console.log('event', event);
   let TimeState: AppState["TimeState"] = "day";
   let WeatherState: AppState["WeatherState"] = "clear";
   let Timer: AppState["Timer"] = 10;
-  let Times: AppState["TimeEventTimes"] = emptyTimeEventTimes;
+  let TimeEventTimes: AppState["TimeEventTimes"] = emptyTimeEventTimes;
 
   switch (state.TimeState) {
     case "day":
@@ -31,7 +32,10 @@ export const reducer: Reducer<AppState, TimeEvent> = (
       TimeState = "day";
   }
 
-  return { TimeState, WeatherState, Timer, Times } as unknown as AppState;
+  if (event.TimeEventTimes) TimeEventTimes = event.TimeEventTimes;
+  console.log('returning this: ', { ...state, TimeState, WeatherState, Timer, TimeEventTimes })
+
+  return { ...state, TimeState, WeatherState, Timer, TimeEventTimes } as unknown as AppState;
 };
 export type { AppState, TimeEvent };
 

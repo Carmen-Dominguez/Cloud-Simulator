@@ -17,8 +17,7 @@ export default function App() {
 
   useEffect(() => {
     timer.getTimes().then(res => {
-      console.log('res', res.data.results[0]);
-      dispatch({ TimeEventTimes: res.data.results[0] } as TimeEvent);
+      dispatch({ TimeEventTimes: res.data.results[0] as TimeEventTimes } as TimeEvent);
     })
   }, [])
 
@@ -28,14 +27,14 @@ export default function App() {
 
   // do the phases
   function nextPhase() {
-    dispatch({ TimePhase: true, NextDay: phase === 3 } as TimeEvent);
+    dispatch({ TimePhase: true } as TimeEvent);
     setPhase(phase === 3 ? 0 : phase + 1);
   }
 
   function phaseTimer() {
     setInterval(() => {
       nextPhase();
-    }, 20000);
+    }, 600000);
   }
 
   return (
