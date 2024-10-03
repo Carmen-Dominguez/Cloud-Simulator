@@ -5,10 +5,10 @@ export const reducer: Reducer<AppState, TimeEvent> = (
   state: AppState,
   event: TimeEvent
 ) => {
-  let TimeState: AppState["TimeState"] = "day";
-  let WeatherState: AppState["WeatherState"] = "clear";
-  let Timer: AppState["Timer"] = 10;
-  let TimeEventTimes: AppState["TimeEventTimes"] = emptyTimeEventTimes;
+  let TimeState: AppState["TimeState"] = state.TimeState || "day";
+  let WeatherState: AppState["WeatherState"] = state.WeatherState || "clear";
+  let Timer: AppState["Timer"] = state.Timer || 10;
+  let TimeEventTimes: AppState["TimeEventTimes"] = state.TimeEventTimes || emptyTimeEventTimes;
 
   if (event.TimePhase) {
     switch (state.TimeState) {
