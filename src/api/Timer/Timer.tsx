@@ -1,9 +1,10 @@
 import React, { useEffect, useReducer, useState } from "react";
 import axios from "axios";
 import { TimeEventTimes } from "src/models/models";
+import { reducer, AppState, TimeEvent } from "../../reducer";
 
 const date = new Date();
-const currentData = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+const currentDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
 export class Timer {
   async getTimes() {
@@ -12,8 +13,8 @@ export class Timer {
           params: {
             lat: "-33.92584", // Cape Town
             lng: "18.42322",
-            date_start: currentData,
-            date_end: currentData,
+            date_start: currentDate,
+            date_end: currentDate,
           },
         });
 
