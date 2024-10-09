@@ -13,7 +13,6 @@ export const Cloud = ({ seedNumber, numOctaves, time }: Props) => {
   const back = random;
   const mid = random - 20;
   const front = random - 40;
-  const frequency = 0.015;
 
   return (
     <div className={styles[time]}>
@@ -25,7 +24,7 @@ export const Cloud = ({ seedNumber, numOctaves, time }: Props) => {
         <filter id="filter-back">
           <feTurbulence
             type="fractalNoise"
-            baseFrequency={frequency}
+            baseFrequency="0.012"
             numOctaves={numOctaves}
             seed={seedNumber}
           />
@@ -34,7 +33,7 @@ export const Cloud = ({ seedNumber, numOctaves, time }: Props) => {
         <filter id="filter-mid">
           <feTurbulence
             type="fractalNoise"
-            baseFrequency={frequency}
+            baseFrequency="0.012"
             numOctaves={numOctaves}
             seed={seedNumber}
           />
@@ -43,7 +42,7 @@ export const Cloud = ({ seedNumber, numOctaves, time }: Props) => {
         <filter id="filter-front">
           <feTurbulence
             type="fractalNoise"
-            baseFrequency={frequency}
+            baseFrequency="0.012"
             numOctaves={numOctaves}
             seed={seedNumber}
           />
