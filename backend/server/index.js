@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
   // Emit the received message data to all connected clients
   cron.schedule('* * * * *', () => {
     logMessage();
-    io.emit("receive_message", `do the thing ${new Date().toLocaleString()}`);
+    io.to(socket.id).emit("receive_message", `do the thing ${new Date().toLocaleString()}`);
     });
 });
 
