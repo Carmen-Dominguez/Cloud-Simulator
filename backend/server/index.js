@@ -15,13 +15,17 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Middleware to parse JSON bodies
 
+app.get('/', (req, res) => {
+  res.send('<h1>Hello worldh1</h1>');
+});
+
 // Create an HTTP server using the Express app
 const server = http.createServer(app);
 
 // Initialize a new instance of Socket.IO by passing the HTTP server
 const io = new Server(server, {
   cors: {
-    origin: `http://localhost:${PORT}`, // Allow requests from this origin and my frontend port = 5173
+    origin: `http://localhost:3000`, // Allow requests from this origin and my frontend port = 5173
     methods: ["GET", "POST"], // Allow these HTTP methods
   },
 });
@@ -37,4 +41,8 @@ io.on("connection", (socket) => {
       // Emit the received message data to all connected clients
       io.emit("receive_message", data);
   });
+});
+
+server.listen(PORT, () => {
+  console.log(`server running at http://localhost:${PORT}`);
 });

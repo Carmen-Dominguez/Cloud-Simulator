@@ -10,7 +10,7 @@ import { Socket } from "socket.io";
 const { io } = require("socket.io-client"); // Import the socket.io client library
 
 // Establish a socket connection to the server at the specified URL
-const socket = io.connect('http://localhost:3000'); //'socket.io-client'
+const socket = io.connect('http://localhost:5173'); //'socket.io-client'
 
 export default function App() {
   const timer = new Timer();
@@ -41,6 +41,7 @@ export default function App() {
 
   useEffect(() => {
     phaseTimer();
+    sendMessage();
   }, [phase]);
 
   useEffect(() => {
