@@ -1,10 +1,15 @@
 require("dotenv").config(); // Load environment variables from .env file
 
+const Timer = require("./solarTime/time.js");
 const express = require("express"); // Import Express framework
 const cors = require("cors"); // Import CORS middleware
 const http = require("http"); // Import Node's HTTP module
 const { Server } = require("socket.io"); // Import Socket.IO Server class
 const cron = require("node-cron");
+
+const date = new Date();
+const currentDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+const solarTime = new Timer(currentDate);
 
 // Define a default port if PORT is not set in .env
 const PORT = process.env.PORT || 5173;
@@ -22,7 +27,7 @@ app.get("/", (req, res) => {
 
 // create cron jobs
 function logMessage() {
-  console.log("Cron job executed at:", new Date().toLocaleString());
+  console.log("Cron job executed at:", date.toLocaleString());
 }
 
 // Create an HTTP server using the Express app
@@ -48,10 +53,13 @@ io.on("connection", (socket) => {
   // Emit the received message data to all connected clients
   cron.schedule('* * * * *', () => {
     logMessage();
-    io.to(socket.id).emit("receive_message", `do the thing ${new Date().toLocaleString()}`);
+    io.to(socket.id).emit("receive_message", `do the thing ${date.toLocaleString()}`);
     });
 });
 
 server.listen(PORT, () => {
   console.log(`server running at http://localhost:${PORT}`);
+  solarTime.getTimes().then(res => {
+    console.log(res.data.results[0]);
+  });
 });
