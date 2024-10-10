@@ -6,7 +6,6 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --mode development",
-    "predev": "npx yarn install",
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
