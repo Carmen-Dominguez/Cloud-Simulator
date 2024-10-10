@@ -1,12 +1,13 @@
-require('dotenv').config(); // Load environment variables from .env file
+require("dotenv").config(); // Load environment variables from .env file
 
-const express = require('express'); // Import Express framework
-const cors = require('cors'); // Import CORS middleware
-const http = require('http'); // Import Node's HTTP module
+const express = require("express"); // Import Express framework
+const cors = require("cors"); // Import CORS middleware
+const http = require("http"); // Import Node's HTTP module
 const { Server } = require("socket.io"); // Import Socket.IO Server class
+const cron = require("node-cron");
 
 // Define a default port if PORT is not set in .env
-const PORT = process.env.PORT || 5173; 
+const PORT = process.env.PORT || 5173;
 
 // Create an Express application
 const app = express();
@@ -15,9 +16,14 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Middleware to parse JSON bodies
 
-app.get('/', (req, res) => {
-  res.send('<h1>Hello worldh1</h1>');
+app.get("/", (req, res) => {
+  res.send("<h1>wassup</h1>");
 });
+
+// create cron jobs
+function logMessage() {
+  console.log("Cron job executed at:", new Date().toLocaleString());
+}
 
 // Create an HTTP server using the Express app
 const server = http.createServer(app);
@@ -36,11 +42,14 @@ io.on("connection", (socket) => {
 
   // Listen for "send_message" events from the connected client
   socket.on("send_message", (data) => {
-      console.log("Message Received ", data); // Log the received message data
-
-      // Emit the received message data to all connected clients
-      io.emit("receive_message", data);
+    console.log("Message Received ", data); // Log the received message data
   });
+
+  // Emit the received message data to all connected clients
+  cron.schedule('* * * * *', () => {
+    logMessage();
+    io.emit("receive_message", `do the thing ${new Date().toLocaleString()}`);
+    });
 });
 
 server.listen(PORT, () => {
