@@ -44,14 +44,14 @@ const io = new Server(server, {
 // Listen for incoming Socket.IO connections
 io.on("connection", (socket) => {
   console.log("User connected ", socket.id); // Log the socket ID of the connected user
-
   // Listen for "send_message" events from the connected client
+  socket.disconnect();
   socket.on("send_message", (data) => {
     console.log("Message Received ", data); // Log the received message data
   });
 
   // Emit the received message data to all connected clients
-  cron.schedule('* * * * *', () => {
+  cron.schedule('*/10 * * * *', () => {
     logMessage();
     io.to(socket.id).emit("receive_message", `do the thing ${date.toLocaleString()}`);
     });
@@ -60,6 +60,8 @@ io.on("connection", (socket) => {
 server.listen(PORT, () => {
   console.log(`server running at http://localhost:${PORT}`);
   solarTime.getTimes().then(res => {
-    console.log(res.data.results[0]);
+    let times = res.data.results[0]
+    console.log(times);
+    console.log(solarTime.formatTimePhases(times));
   });
 });

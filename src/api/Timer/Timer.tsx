@@ -11,8 +11,8 @@ export class Timer {
     try {
         const response = await axios.get("https://api.sunrisesunset.io/json", {
           params: {
-            lat: "-33.92584", // Cape Town
-            lng: "18.42322",
+            lat: "67.9222", // Cape Town 67.9222° N, 26.5046° E
+            lng: "26.5046",
             date_start: currentDate,
             date_end: currentDate,
           },

@@ -26,11 +26,42 @@ class Timer {
     }
   }
 
-  formatTimePhases(data) {}
+  formatTimePhases(times) {
+    const day = this.addMinutes(this.formatDate(times.date, times.sunrise), 72);
 
-  formatIntoCronSlot(date) {}
+    return [
+      {'cron': this.formatIntoCronSlot(times.date, times.first_light), 'first_light': times.first_light},
+      {'cron': this.formatIntoCronSlot(times.date, times.dawn), 'dawn': times.dawn},
+      {'cron': this.formatIntoCronSlot(times.date, times.sunrise), 'sunrise': times.sunrise},
+      {'cron': this.formatIntoCronSlot(times.date, day), 'day': day},
+      {'cron': this.formatIntoCronSlot(times.date, times.golden_hour), 'golden_hour': times.golden_hour},
+      {'cron': this.formatIntoCronSlot(times.date, times.sunset), 'sunset': times.sunset},
+      {'cron': this.formatIntoCronSlot(times.date, times.dusk), 'dusk': times.dusk},
+      {'cron': this.formatIntoCronSlot(times.date, times.last_light), 'last_light': times.last_light},
+    ];
+  }
 
-  getTransitionTime(first, next) {}
+  formatDate(day, time) {
+    return new Date(`${day} ${time}`);
+  }
+
+  formatIntoCronSlot(day, time) {
+    const date = this.formatDate(day, time);
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    
+    console.log(time, date, hour, minute);
+    return `${minute} ${hour} * * *`;
+  }
+
+  getTransitionTime(first, next) {
+    return Math.abs(first - next) / 1000;
+  }
+
+  addMinutes(date, minutes) {
+    const newTime = new Date(date.setMinutes(date.getMinutes() + minutes));
+    return `${newTime.getHours()}:${newTime.getMinutes()}:00 AM`;
+  }
 }
 
 module.exports = Timer;
