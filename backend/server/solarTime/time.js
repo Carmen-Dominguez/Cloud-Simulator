@@ -5,6 +5,8 @@ const cron = require("node-cron");
 // const currentDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
 class Timer {
+  cronJobTimes = []
+
   constructor(currentDate) {
     this.currentDate = currentDate;
   }
@@ -29,7 +31,7 @@ class Timer {
 
   formatTimePhases(times) {
     const day = this.addMinutes(this.formatDate(times.date, times.sunrise), 72);
-    const testCron = '30 15 * * *';
+    const testCron = '33 17 * * *';
 
     return [
       this.formatIntoCronSlot(times.date, times.first_light), 
@@ -66,12 +68,29 @@ class Timer {
     return `${newTime.getHours()}:${newTime.getMinutes()}:00 AM`;
   }
 
-  createSolarCronJobs(cromStrings, action) {
-    cromStrings.forEach(str => {
-      cron.schedule(str, () => {
+  createSolarCronJobs(cronStrings, action) {
+    console.log('create dynamic cron jobs', cronStrings);
+     cronStrings.forEach(str => {
+      const job = cron.schedule(str, () => {
+        console.log('cron job', str);
         action();
-        console.log(`cron created for ${str}`);
-      }) 
+        job.stop();
+        console.log(job);
+      });
+      console.log('cron job', str);
+      console.log(job);
+    });
+  }
+
+  createNamedSolarCronJobs(cronStrings, action) {
+    console.log('create dynamic cron jobs', cronStrings);
+    cronStrings.forEach((str, index) => {
+        this.cronJobTimes[index] = cron.schedule(str, () => {
+          console.log('cron job', str);
+          action();
+          this.cronJobTimes[index].stop();
+          this.cronJobTimes[index] = null;
+        });
     });
   }
 }

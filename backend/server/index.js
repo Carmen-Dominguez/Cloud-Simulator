@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 
 // create cron jobs
 function logMessage() {
-  console.log("Cron job executed at:", date.toLocaleString());
+  console.log("Cron job executed at:", new Date());
 }
 
 // Create an HTTP server using the Express app
@@ -53,24 +53,33 @@ io.on("connection", (socket) => {
     console.log("Message Received ", data); // Log the received message data
   });
 
+  solarTime.getTimes().then((res) => {
+    let times = res.data.results[0];
+    cromStrings = solarTime.formatTimePhases(times)
+    console.log(cromStrings);
+  });
+
+  const job = () => {
+    io.to(socket.id).emit("phase_change", true)
+  }
+
+  // create cron jobs
+  // solarTime.createSolarCronJobs(cromStrings, job);
+  solarTime.createNamedSolarCronJobs(cromStrings, job);
+
+
   // Emit the received message data to all connected clients
-  cron.schedule("*/10 * * * *", () => {
+  cron.schedule("55 16 * * *", () => {
     logMessage();
     io.to(socket.id).emit(
       "receive_message",
-      `do the thing ${date.toLocaleString()}`
+      `test message ${new Date()}`
     );
   });
 
-  solarTime.createSolarCronJobs(cromStrings, io.to(socket.id).emit("phase_change", true));
 });
 
 server.listen(PORT, () => {
   console.log(`server running at http://localhost:${PORT}`);
-  solarTime.getTimes().then((res) => {
-    let times = res.data.results[0];
-    console.log(times);
-    cromStrings = solarTime.formatTimePhases(times)
-    console.log(cromStrings);
-  });
+  
 });
