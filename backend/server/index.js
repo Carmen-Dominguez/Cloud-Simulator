@@ -8,8 +8,11 @@ const { Server } = require("socket.io"); // Import Socket.IO Server class
 const cron = require("node-cron");
 
 const date = new Date();
-const currentDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+const currentDate = `${date.getFullYear()}-${
+  date.getMonth() + 1
+}-${date.getDate()}`;
 const solarTime = new Timer(currentDate);
+let cromStrings = [];
 
 // Define a default port if PORT is not set in .env
 const PORT = process.env.PORT || 5173;
@@ -45,23 +48,29 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log("User connected ", socket.id); // Log the socket ID of the connected user
   // Listen for "send_message" events from the connected client
-  socket.disconnect();
+  // socket.disconnect();
   socket.on("send_message", (data) => {
     console.log("Message Received ", data); // Log the received message data
   });
 
   // Emit the received message data to all connected clients
-  cron.schedule('*/10 * * * *', () => {
+  cron.schedule("*/10 * * * *", () => {
     logMessage();
-    io.to(socket.id).emit("receive_message", `do the thing ${date.toLocaleString()}`);
-    });
+    io.to(socket.id).emit(
+      "receive_message",
+      `do the thing ${date.toLocaleString()}`
+    );
+  });
+
+  solarTime.createSolarCronJobs(cromStrings, io.to(socket.id).emit("phase_change", true));
 });
 
 server.listen(PORT, () => {
   console.log(`server running at http://localhost:${PORT}`);
-  solarTime.getTimes().then(res => {
-    let times = res.data.results[0]
+  solarTime.getTimes().then((res) => {
+    let times = res.data.results[0];
     console.log(times);
-    console.log(solarTime.formatTimePhases(times));
+    cromStrings = solarTime.formatTimePhases(times)
+    console.log(cromStrings);
   });
 });

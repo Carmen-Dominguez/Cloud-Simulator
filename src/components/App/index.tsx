@@ -51,9 +51,15 @@ export default function App() {
       setReceiveMessage(data); // Set the received message data to state
     });
 
+    socket.on('phase_change', (data) => {
+      console.log('change phase', data);
+      setReceiveMessage(data);
+      nextPhase();
+    });
+
     // Cleanup the effect by removing the event listener when the component unmounts
     return () => {
-      socket.off("receive_message");
+      socket.off("receive_message cleanup");
     };
   }, []); // Empty dependency array ensures this runs only once when the component mounts
 
