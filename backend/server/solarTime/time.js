@@ -1,11 +1,8 @@
 const axios = require("axios");
 const cron = require("node-cron");
 
-// const date = new Date();
-// const currentDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-
 class Timer {
-  cronJobTimes = []
+  cronJobTimes = [];
 
   constructor(currentDate) {
     this.currentDate = currentDate;
@@ -31,17 +28,17 @@ class Timer {
 
   formatTimePhases(times) {
     const day = this.addMinutes(this.formatDate(times.date, times.sunrise), 72);
-    const testCron = '33 17 * * *';
+    const testCron = "33 17 * * *";
 
     return [
-      this.formatIntoCronSlot(times.date, times.first_light), 
-      this.formatIntoCronSlot(times.date, times.dawn), 
-      this.formatIntoCronSlot(times.date, times.sunrise), 
-      this.formatIntoCronSlot(times.date, day), 
-      this.formatIntoCronSlot(times.date, times.golden_hour), 
-      this.formatIntoCronSlot(times.date, times.sunset), 
-      this.formatIntoCronSlot(times.date, times.dusk), 
-      this.formatIntoCronSlot(times.date, times.last_light), 
+      this.formatIntoCronSlot(times.date, times.first_light),
+      this.formatIntoCronSlot(times.date, times.dawn),
+      this.formatIntoCronSlot(times.date, times.sunrise),
+      this.formatIntoCronSlot(times.date, day),
+      this.formatIntoCronSlot(times.date, times.golden_hour),
+      this.formatIntoCronSlot(times.date, times.sunset),
+      this.formatIntoCronSlot(times.date, times.dusk),
+      this.formatIntoCronSlot(times.date, times.last_light),
       testCron,
     ];
   }
@@ -54,7 +51,7 @@ class Timer {
     const date = this.formatDate(day, time);
     const hour = date.getHours();
     const minute = date.getMinutes();
-    
+
     console.log(time, date, hour, minute);
     return `${minute} ${hour} * * *`;
   }
@@ -68,29 +65,15 @@ class Timer {
     return `${newTime.getHours()}:${newTime.getMinutes()}:00 AM`;
   }
 
-  createSolarCronJobs(cronStrings, action) {
-    console.log('create dynamic cron jobs', cronStrings);
-     cronStrings.forEach(str => {
-      const job = cron.schedule(str, () => {
-        console.log('cron job', str);
-        action();
-        job.stop();
-        console.log(job);
-      });
-      console.log('cron job', str);
-      console.log(job);
-    });
-  }
-
   createNamedSolarCronJobs(cronStrings, action) {
-    console.log('create dynamic cron jobs', cronStrings);
+    console.log("create dynamic cron jobs", cronStrings);
     cronStrings.forEach((str, index) => {
-        this.cronJobTimes[index] = cron.schedule(str, () => {
-          console.log('cron job', str);
-          action();
-          this.cronJobTimes[index].stop();
-          this.cronJobTimes[index] = null;
-        });
+      this.cronJobTimes[index] = cron.schedule(str, () => {
+        console.log("cron job", str);
+        action();
+        this.cronJobTimes[index].stop();
+        this.cronJobTimes[index] = null;
+      });
     });
   }
 }

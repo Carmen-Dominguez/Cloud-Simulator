@@ -4,13 +4,13 @@ import { Sky } from "../Sky";
 import { reducer, AppState, TimeEvent } from "../../reducer";
 import { Timer } from "src/api/Timer/Timer";
 import { emptyTimeEventTimes, TimeEventTimes } from "src/models/models";
-import axios from 'axios'; // Import axios for API requests
+import axios from "axios"; // Import axios for API requests
 import { Socket } from "socket.io";
 
 const { io } = require("socket.io-client"); // Import the socket.io client library
 
 // Establish a socket connection to the server at the specified URL
-const socket = io.connect('http://localhost:5173'); //'socket.io-client'
+const socket = io.connect("http://localhost:5173"); //'socket.io-client'
 
 export default function App() {
   const timer = new Timer();
@@ -20,24 +20,32 @@ export default function App() {
   const [state, dispatch] = useReducer(reducer, {
     TimeState: "day",
     WeatherState: "clear",
-    TimeEventTimes: emptyTimeEventTimes
+    TimeEventTimes: emptyTimeEventTimes,
   } as AppState);
 
   // Function to send a message
-  const sendMessage = async () => {
+  const sendMessage = async (
+    sendID = "0",
+    receiveID = "phase",
+    message = "change phase"
+  ) => {
     // Emit a socket event with the message details
     socket.emit("send_message", {
-      senderId: "0",     // ID of the sender
-      receiverId: "phase", // ID of the receiver
-      message: "change phase"   // The actual message content
+      senderId: sendID, // ID of the sender
+      receiverId: receiveID, // ID of the receiver
+      message: message, // The actual message content
     });
-  }
+
+    console.log('message sent');
+  };
 
   useEffect(() => {
-    timer.getTimes().then(res => {
-      dispatch({ TimeEventTimes: res.data.results[0] as TimeEventTimes } as TimeEvent);
-    })
-  }, [])
+    timer.getTimes().then((res) => {
+      dispatch({
+        TimeEventTimes: res.data.results[0] as TimeEventTimes,
+      } as TimeEvent);
+    });
+  }, []);
 
   useEffect(() => {
     phaseTimer();
@@ -47,12 +55,12 @@ export default function App() {
   useEffect(() => {
     // Listen for incoming messages from the server
     socket.on("receive_message", (data) => {
-      console.log(data); // Log the received message data to the console
+      console.log(data, `received: ${new Date()}`); // Log the received message data to the console
       setReceiveMessage(data); // Set the received message data to state
     });
 
-    socket.on('phase_change', (data) => {
-      console.log('change phase', data);
+    socket.on("phase_change", (data) => {
+      console.log("change phase", data);
       setReceiveMessage(data);
       nextPhase();
     });
@@ -63,11 +71,11 @@ export default function App() {
     };
   }, []); // Empty dependency array ensures this runs only once when the component mounts
 
-
   // do the phases
   function nextPhase() {
     dispatch({ TimePhase: true } as TimeEvent);
     setPhase(phase === 3 ? 0 : phase + 1);
+    sendMessage();
   }
 
   function phaseTimer() {
