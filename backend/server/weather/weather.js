@@ -1,4 +1,5 @@
 const axios = require("axios");
+require('dotenv').config();
 
 class Weather {
   weatherData = {};
@@ -15,7 +16,7 @@ class Weather {
           params: {
             lat: "-33.92584", // Cape Town
             lon: "18.42322",
-            appid: "f4a326bb3cbe5d8909d9a4040cced738",
+            appid: `${process.env.WEATHERAPI}`,
             units: "metric"
           },
         }
