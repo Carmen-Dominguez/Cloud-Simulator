@@ -1,6 +1,7 @@
 require("dotenv").config(); // Load environment variables from .env file
 
 const Timer = require("./solarTime/time.js");
+const Weather = require("./weather/weather.js");
 const express = require("express"); // Import Express framework
 const cors = require("cors"); // Import CORS middleware
 const http = require("http"); // Import Node's HTTP module
@@ -12,6 +13,7 @@ const currentDate = `${date.getFullYear()}-${
   date.getMonth() + 1
 }-${date.getDate()}`;
 const solarTime = new Timer(currentDate);
+const weather = new Weather({});
 let cromStrings = [];
 
 // Define a default port if PORT is not set in .env
@@ -47,6 +49,7 @@ const io = new Server(server, {
 // Listen for incoming Socket.IO connections
 io.on("connection", (socket) => {
   console.log("User connected ", socket.id); // Log the socket ID of the connected user
+
   // Listen for "send_message" events from the connected client
   // socket.disconnect();
   socket.on("send_message", (data) => {
@@ -76,10 +79,14 @@ io.on("connection", (socket) => {
       `test message ${new Date()}`
     );
   });
-
 });
 
 server.listen(PORT, () => {
   console.log(`server running at http://localhost:${PORT}`);
   
+  // get the weather
+  weather.getWeatherData().then(res => {
+    weather.setWeather(res.data);
+    console.log(weather);
+  });
 });
