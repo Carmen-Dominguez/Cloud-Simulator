@@ -33,7 +33,7 @@ class Weather {
   }
 
   setWeather(weather) {
-    this.getWeather = weather;
+    this.weatherData = weather;
   }
 }
 

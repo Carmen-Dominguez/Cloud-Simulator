@@ -26,6 +26,14 @@ class Timer {
     }
   }
 
+  getCronJobTimes() {
+    return this.cronJobTimes;
+  }
+
+  setCromJobTimes(times) {
+    this.cronJobTimes = times;
+  }
+
   formatTimePhases(times) {
     const day = this.addMinutes(this.formatDate(times.date, times.sunrise), 72);
     const testCron = "33 17 * * *";
