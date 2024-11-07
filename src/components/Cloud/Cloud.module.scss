@@ -19,7 +19,7 @@
   left: calc(0% - 300px);
   animation: move 20s infinite;
   animation-direction: alternate;
-  @include transition();
+  // @include transition();
 }
 
 .day {

@@ -6,19 +6,28 @@ type Props = {
   seedNumber: number;
   numOctaves: number;
   time: AppState["TimeState"];
+  phaseDuration: number
 };
 
-export const Cloud = ({ seedNumber, numOctaves, time }: Props) => {
+
+export const Cloud = ({ seedNumber, numOctaves, time, phaseDuration }: Props) => {
   const random = Math.random() * (250 - 100) + 100;
   const back = random;
   const mid = random - 20;
   const front = random - 40;
 
+  const animatePhase = {
+    transition: `all ${phaseDuration}s linear`,
+    '-webkit-transition': `all ${phaseDuration}s linear`,
+    '-moz-transition': `all ${phaseDuration}s linear`,
+    '-o-transition': `all ${phaseDuration}s linear`,
+  };
+
   return (
     <div className={styles[time]}>
-      <div className={`${styles.cloud} ${styles.cloudBack}`}></div>
-      <div className={`${styles.cloud} ${styles.cloudMid}`}></div>
-      <div className={`${styles.cloud} ${styles.cloudFront}`}></div>
+      <div style={animatePhase} className={`${styles.cloud} ${styles.cloudBack}`}></div>
+      <div style={animatePhase} className={`${styles.cloud} ${styles.cloudMid}`}></div>
+      <div style={animatePhase} className={`${styles.cloud} ${styles.cloudFront}`}></div>
 
       <svg width="0" height="0">
         <filter id="filter-back">

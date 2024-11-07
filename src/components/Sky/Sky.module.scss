@@ -27,19 +27,19 @@ body {
 .day {
   background-image: $day;
   @include dimension();
-  @include transition();
+  // @include transition();
 }
 
 .dawn {
   background-image: $dawn;
   @include dimension();
-  @include transition();
+  // @include transition();
 }
 
 .dusk {
   background-image: $dusk;
   @include dimension();
-  @include transition();
+  // @include transition();
 }
 
 .night {
@@ -47,10 +47,10 @@ body {
   background-size: 800px 100%;
   background-repeat: repeat-x;
 
-  -webkit-transition: all 8s linear;
-  -moz-transition: all 8s linear;
-  -o-transition: all 8s linear;
-  transition: all 8s linear;
+  // -webkit-transition: all 8s linear;
+  // -moz-transition: all 8s linear;
+  // -o-transition: all 8s linear;
+  // transition: all 8s linear;
 
   @function polarity() {
     $value: random(2);

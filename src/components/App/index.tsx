@@ -48,13 +48,13 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    phaseTimer();
+    // phaseTimer();
     sendMessage();
   }, [phase]);
 
   useEffect(() => {
     // Listen for incoming messages from the server
-    socket.on("receive_message", (data) => {
+    socket.on("receive_message", (data: any) => {
       console.log(data, `received: ${new Date()}`); // Log the received message data to the console
       setReceiveMessage(data); // Set the received message data to state
     });
@@ -78,6 +78,7 @@ export default function App() {
     sendMessage();
   }
 
+  // timer when there was no backend
   function phaseTimer() {
     setInterval(() => {
       nextPhase();
@@ -86,8 +87,8 @@ export default function App() {
 
   return (
     <div onClick={nextPhase}>
-      <Sky time={state.TimeState}>
-        <Cloud seedNumber={7} numOctaves={5} time={state.TimeState} />
+      <Sky time={state.TimeState} phaseDuration={60}>
+        <Cloud seedNumber={7} numOctaves={5} time={state.TimeState} phaseDuration={60} />
       </Sky>
     </div>
   );
