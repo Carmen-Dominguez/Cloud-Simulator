@@ -3,6 +3,8 @@ require('dotenv').config();
 
 class Weather {
   weatherData = {};
+  london = ['51.50853', '-0.12574'];
+  capeTown = ['-33.92584', '18.42322'];
 
   constructor(currentWeather) {
     this.weatherData = currentWeather;
@@ -14,8 +16,8 @@ class Weather {
         "https://api.openweathermap.org/data/2.5/weather",
         {
           params: {
-            lat: "-33.92584", // Cape Town
-            lon: "18.42322",
+            lat: this.capeTown[0], // Cape Town
+            lon: this.capeTown[1],
             appid: `${process.env.WEATHERAPI}`,
             units: "metric"
           },

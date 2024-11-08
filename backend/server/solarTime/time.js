@@ -3,6 +3,8 @@ const cron = require("node-cron");
 
 class Timer {
   cronJobTimes = [];
+  london = ['51.50853', '-0.12574'];
+  capeTown = ['-33.92584', '18.42322'];
 
   constructor(currentDate) {
     this.currentDate = currentDate;
@@ -12,8 +14,8 @@ class Timer {
     try {
       const response = await axios.get("https://api.sunrisesunset.io/json", {
         params: {
-          lat: "-33.92584", // Cape Town
-          lng: "18.42322",
+          lat: this.capeTown[0], // Cape Town
+          lng: this.capeTown[1],
           date_start: this.currentDate,
           date_end: this.currentDate,
         },
@@ -36,16 +38,16 @@ class Timer {
 
   formatTimePhases(times) {
     const day = this.addMinutes(this.formatDate(times.date, times.sunrise), 72);
-    const testCron = "33 17 * * *";
+    const testCron = "35 10 * * *";
 
     return [
       this.formatIntoCronSlot(times.date, times.first_light),
-      this.formatIntoCronSlot(times.date, times.dawn),
+      // this.formatIntoCronSlot(times.date, times.dawn),
       this.formatIntoCronSlot(times.date, times.sunrise),
       this.formatIntoCronSlot(times.date, day),
       this.formatIntoCronSlot(times.date, times.golden_hour),
       this.formatIntoCronSlot(times.date, times.sunset),
-      this.formatIntoCronSlot(times.date, times.dusk),
+      // this.formatIntoCronSlot(times.date, times.dusk),
       this.formatIntoCronSlot(times.date, times.last_light),
       testCron,
     ];
