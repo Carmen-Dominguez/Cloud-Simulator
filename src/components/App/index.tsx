@@ -19,7 +19,7 @@ export default function App() {
 
   const [state, dispatch] = useReducer(reducer, {
     TimeState: "day",
-    WeatherState: "clear",
+    WeatherState: "clear sky",
     TimeEventTimes: emptyTimeEventTimes,
   } as AppState);
 
@@ -68,6 +68,9 @@ export default function App() {
     socket.on("current_weather", (data: any) => {
       console.log("current_weather on server", data);
       setReceiveMessages([...receiveMessages, data]);
+      dispatch({
+        WeatherState: data.description,
+      });
     });
 
     console.log(receiveMessages);

@@ -1,6 +1,15 @@
 export type AppState = {
   TimeState: "day" | "dusk" | "night" | "dawn";
-  WeatherState: "clear" | "cloudy" | "rain" | "storm";
+  WeatherState:
+    | "clear sky"
+    | "few clouds"
+    | "scattered clouds"
+    | "broken clouds"
+    | "shower rain"
+    | "rain"
+    | "thunderstorm"
+    | "snow"
+    | "mist";
   Timer: number;
   TimeEventTimes: TimeEventTimes;
 };
@@ -13,18 +22,18 @@ export type TimeEvent = {
 };
 
 export type TimeEventTimes = {
-  date: string;          // "2024-10-01";
-  dawn: string;          // "5:59:08 AM";
-  day_length: string;    // "12:25:51";
-  dusk: string;          // "7:15:07 PM";
-  first_light: string;   // "4:59:50 AM";
-  golden_hour: string;   // "6:17:05 PM";
-  last_light: string;    // "8:14:25 PM";
-  solar_noon: string;    // "12:37:07 PM";
-  sunrise: string;       // "6:24:11 AM";
-  sunset: string;        // "6:50:03 PM";
-  timezone: string;      // "Africa/Johannesburg";
-  utc_offset: number;     // 120;
+  date: string; // "2024-10-01";
+  dawn: string; // "5:59:08 AM";
+  day_length: string; // "12:25:51";
+  dusk: string; // "7:15:07 PM";
+  first_light: string; // "4:59:50 AM";
+  golden_hour: string; // "6:17:05 PM";
+  last_light: string; // "8:14:25 PM";
+  solar_noon: string; // "12:37:07 PM";
+  sunrise: string; // "6:24:11 AM";
+  sunset: string; // "6:50:03 PM";
+  timezone: string; // "Africa/Johannesburg";
+  utc_offset: number; // 120;
 };
 
 export const emptyTimeEventTimes = {
@@ -39,5 +48,5 @@ export const emptyTimeEventTimes = {
   sunrise: "",
   sunset: "",
   timezone: "",
-  utc_offset: 0
+  utc_offset: 0,
 };
