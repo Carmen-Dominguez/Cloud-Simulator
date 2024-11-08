@@ -15,7 +15,7 @@ const socket = io.connect("http://localhost:5173"); //'socket.io-client'
 export default function App() {
   const timer = new Timer();
   const [phase, setPhase] = useState(0);
-  const [receiveMessage, setReceiveMessage] = useState(""); // State to store received message
+  const [receiveMessages, setReceiveMessages] = useState([]); // State to store received message
 
   const [state, dispatch] = useReducer(reducer, {
     TimeState: "day",
@@ -27,7 +27,7 @@ export default function App() {
   const sendMessage = async (
     sendID = "0",
     receiveID = "phase",
-    message = "change phase"
+    message = "wassup"
   ) => {
     // Emit a socket event with the message details
     socket.emit("send_message", {
@@ -35,8 +35,6 @@ export default function App() {
       receiverId: receiveID, // ID of the receiver
       message: message, // The actual message content
     });
-
-    console.log('message sent');
   };
 
   useEffect(() => {
@@ -56,20 +54,28 @@ export default function App() {
     // Listen for incoming messages from the server
     socket.on("receive_message", (data: any) => {
       console.log(data, `received: ${new Date()}`); // Log the received message data to the console
-      setReceiveMessage(data); // Set the received message data to state
+      setReceiveMessages([...receiveMessages, data]); // Set the received message data to state
     });
 
-    socket.on("phase_change", (data) => {
-      console.log("change phase", data);
-      setReceiveMessage(data);
+    // change with phase of day
+    socket.on("phase_change", (data: any) => {
+      console.log("phase_change on server", data);
+      setReceiveMessages([...receiveMessages, data]);
       nextPhase();
     });
 
+    // get current weather 
+    socket.on("current_weather", (data: any) => {
+      console.log("current_weather on server", data);
+      setReceiveMessages([...receiveMessages, data]);
+    });
+
+    console.log(receiveMessages);
     // Cleanup the effect by removing the event listener when the component unmounts
     return () => {
       socket.off("receive_message cleanup");
     };
-  }, []); // Empty dependency array ensures this runs only once when the component mounts
+  }, [socket, receiveMessages]); // Empty dependency array ensures this runs only once when the component mounts
 
   // do the phases
   function nextPhase() {

@@ -27,7 +27,7 @@ app.use(cors());
 app.use(express.json()); // Middleware to parse JSON bodies
 
 app.get("/", (req, res) => {
-  res.send("<h1>wassup</h1>");
+  res.send("<h1>The Weather App: Wassup</h1>");
 });
 
 // create cron jobs
@@ -51,42 +51,41 @@ io.on("connection", (socket) => {
   console.log("User connected ", socket.id); // Log the socket ID of the connected user
 
   // Listen for "send_message" events from the connected client
-  // socket.disconnect();
   socket.on("send_message", (data) => {
     console.log("Message Received ", data); // Log the received message data
   });
 
   solarTime.getTimes().then((res) => {
-    let times = res.data.results[0];
-    cromStrings = solarTime.formatTimePhases(times)
-    console.log(cromStrings);
+    cromStrings = solarTime.formatTimePhases(res.data.results[0])
+  });
+
+  // get the weather
+  weather.getWeatherData().then(res => {
+    weather.setWeather(res.data.weather);
+    io.to(socket.id).emit("current_weather", weather.getWeather())
   });
 
   const job = () => {
-    io.to(socket.id).emit("phase_change", true)
+    io.to(socket.id).emit("phase_change", true);
+    logMessage();
   }
 
   // create cron jobs
   // solarTime.createSolarCronJobs(cromStrings, job);
   solarTime.createNamedSolarCronJobs(cromStrings, job);
 
+  // Emit the received message data to all connected clients for testing
+  // cron.schedule("* * * * *", () => {
+  //   logMessage();
+  //   io.to(socket.id).emit(
+  //     "receive_message",
+  //     `test message ${new Date()}`
+  //   );
+  // });
 
-  // Emit the received message data to all connected clients
-  cron.schedule("55 16 * * *", () => {
-    logMessage();
-    io.to(socket.id).emit(
-      "receive_message",
-      `test message ${new Date()}`
-    );
-  });
+  // socket.disconnect();
 });
 
 server.listen(PORT, () => {
   console.log(`server running at http://localhost:${PORT}`);
-  
-  // get the weather
-  weather.getWeatherData().then(res => {
-    weather.setWeather(res.data);
-    console.log(weather);
-  });
 });
