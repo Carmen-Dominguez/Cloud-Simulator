@@ -11,16 +11,16 @@ type Props = {
 export const Sky: FC<Props> = ({ time, phaseDuration, children }: Props) => {
   const animatePhase = {
     transition: `opacity ${phaseDuration}s linear`,
-    '-webkit-transition': `opacity ${phaseDuration}s linear`,
-    '-moz-transition': `opacity ${phaseDuration}s linear`,
-    '-o-transition': `opacity ${phaseDuration}s linear`,
+    WebkitTransition: `opacity ${phaseDuration}s linear`,
+    MozTransition: `opacity ${phaseDuration}s linear`,
+    OTransition: `opacity ${phaseDuration}s linear`,
   };
 
   const animateNight = {
     transition: `all ${phaseDuration}s linear`,
-    '-webkit-transition': `all ${phaseDuration}s linear`,
-    '-moz-transition': `all ${phaseDuration}s linear`,
-    '-o-transition': `all ${phaseDuration}s linear`,
+    WebkitTransition: `all ${phaseDuration}s linear`,
+    MozTransition: `all ${phaseDuration}s linear`,
+    OTransition: `all ${phaseDuration}s linear`,
   };
 
   return (

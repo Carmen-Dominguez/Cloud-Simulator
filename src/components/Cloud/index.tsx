@@ -18,9 +18,9 @@ export const Cloud = ({ seedNumber, numOctaves, time, phaseDuration }: Props) =>
 
   const animatePhase = {
     transition: `all ${phaseDuration}s linear`,
-    '-webkit-transition': `all ${phaseDuration}s linear`,
-    '-moz-transition': `all ${phaseDuration}s linear`,
-    '-o-transition': `all ${phaseDuration}s linear`,
+    WebkitTransition: `all ${phaseDuration}s linear`,
+    MozTransition: `all ${phaseDuration}s linear`,
+    OTransition: `all ${phaseDuration}s linear`,
   };
 
   return (
