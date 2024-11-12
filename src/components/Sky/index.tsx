@@ -29,6 +29,8 @@ export const Sky: FC<Props> = ({
     WebkitTransition: `all ${phaseDuration}s linear`,
     MozTransition: `all ${phaseDuration}s linear`,
     OTransition: `all ${phaseDuration}s linear`,
+    opacity: `${time === 'night' ? 1: 0}`,
+    backgroundPosition: `${time !== 'night' ? 'center center': ''}`,
   };
 
   // weather states with clouds
@@ -69,7 +71,7 @@ export const Sky: FC<Props> = ({
     <div className={`${styles.container}`}>
       <div style={{...animatePhase, opacity: time === 'day'? 1: 0 }} className={`${styles.day}`}></div>
       <div style={{...animatePhase, opacity: time === 'dusk'? 1: 0 }} className={`${styles.dusk}`}></div>
-      <div style={time === 'night'? { opacity: 1,...animateNight}: { opacity: 0, backgroundPosition: 'center center' }} className={`${styles.night}`}></div>
+      <div style={animateNight} className={`${styles.night}`}></div>
       <div style={{ ...animatePhase, opacity: time === 'dawn'? 1: 0 }} className={`${styles.dawn}`}></div>
 
       {Array.from({length: cloudNum}, (_, index) => (
