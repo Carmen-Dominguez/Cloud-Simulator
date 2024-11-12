@@ -62,6 +62,7 @@ io.on("connection", (socket) => {
   // get the weather
   weather.getWeatherData().then(res => {
     weather.setWeather(res.data.weather);
+    console.log('weather: ', res.data)
     io.to(socket.id).emit("current_weather", weather.getWeather())
   });
 
