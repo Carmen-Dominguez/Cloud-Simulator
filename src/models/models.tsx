@@ -1,15 +1,14 @@
+export type Weather =
+  | "clear"
+  | "clouds"
+  | "rain"
+  | "thunderstorm"
+  | "snow"
+  | "mist";
+
 export type AppState = {
   TimeState: "day" | "dusk" | "night" | "dawn";
-  WeatherState:
-    | "clear sky"
-    | "few clouds"
-    | "scattered clouds"
-    | "broken clouds"
-    | "shower rain"
-    | "rain"
-    | "thunderstorm"
-    | "snow"
-    | "mist";
+  WeatherState: Weather;
   Timer: number;
   TimeEventTimes: TimeEventTimes;
 };
@@ -19,6 +18,8 @@ export type TimeEvent = {
   NextDay: boolean; // to signify the a new day
   Timer: number; // how long a timePhase lasts
   TimeEventTimes: TimeEventTimes; // time in day when timePhase occurs
+  WeatherPhase: boolean; // when weather changes
+  WeatherDesc: Weather; // what it changes to
 };
 
 export type TimeEventTimes = {
