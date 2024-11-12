@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { Cloud } from "../Cloud";
 import { Sky } from "../Sky";
-import { reducer, AppState, TimeEvent } from "../../reducer";
+import { reducer, AppState, Action } from "../../reducer";
 import { Timer } from "src/api/Timer/Timer";
 import { emptyTimeEventTimes, TimeEventTimes } from "src/models/models";
 import axios from "axios"; // Import axios for API requests
@@ -42,7 +42,7 @@ export default function App() {
     timer.getTimes().then((res) => {
       dispatch({
         TimeEventTimes: res.data.results[0] as TimeEventTimes,
-      } as TimeEvent);
+      } as Action);
     });
   }, []);
 
@@ -71,7 +71,7 @@ export default function App() {
       dispatch({
         WeatherPhase: true,
         WeatherDesc: data[0].main?.toLowerCase(),
-      } as TimeEvent);
+      } as Action);
 
       console.log("current_weather from server", data);
       console.log('current State: ', state);
@@ -86,7 +86,7 @@ export default function App() {
 
   // do the phases
   function nextPhase() {
-    dispatch({ TimePhase: true } as TimeEvent);
+    dispatch({ TimePhase: true } as Action);
     setPhase(phase === 3 ? 0 : phase + 1);
     sendMessage();
   }

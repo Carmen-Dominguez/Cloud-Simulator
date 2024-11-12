@@ -13,7 +13,7 @@ export type AppState = {
   TimeEventTimes: TimeEventTimes;
 };
 
-export type TimeEvent = {
+export type Action = {
   TimePhase: boolean; // when time moves forward to the next phase
   NextDay: boolean; // to signify the a new day
   Timer: number; // how long a timePhase lasts

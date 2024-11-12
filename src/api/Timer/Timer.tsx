@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import axios from "axios";
 import { TimeEventTimes } from "src/models/models";
-import { reducer, AppState, TimeEvent } from "../../reducer";
+import { reducer, AppState, Action } from "../../reducer";
 
 const date = new Date();
 const currentDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;

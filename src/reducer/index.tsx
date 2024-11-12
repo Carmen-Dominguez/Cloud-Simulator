@@ -1,9 +1,9 @@
 import React, { Reducer } from "react";
-import { AppState, emptyTimeEventTimes, TimeEvent } from "src/models/models";
+import { AppState, emptyTimeEventTimes, Action } from "src/models/models";
 
-export const reducer: Reducer<AppState, TimeEvent> = (
+export const reducer: Reducer<AppState, Action> = (
   state: AppState,
-  event: TimeEvent
+  event: Action
 ) => {
   let TimeState: AppState["TimeState"] = state.TimeState || "day";
   let WeatherState: AppState["WeatherState"] = state.WeatherState || "rain";
@@ -58,4 +58,4 @@ export const reducer: Reducer<AppState, TimeEvent> = (
     TimeEventTimes,
   } as unknown as AppState;
 };
-export type { AppState, TimeEvent };
+export type { AppState, Action };
