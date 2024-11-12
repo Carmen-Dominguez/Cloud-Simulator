@@ -1,12 +1,14 @@
-import React from "react";
+import React, {useReducer} from "react";
 import styles from "./Cloud.module.scss";
-import { AppState } from "../../reducer";
+import { AppState, reducer } from "../../reducer";
+import { emptyTimeEventTimes, Weather } from "src/models/models";
 
 type Props = {
   seedNumber: number;
   numOctaves: number;
   time: AppState["TimeState"];
   phaseDuration: number;
+  weather: AppState["WeatherState"];
 };
 
 export const Cloud = ({
@@ -14,6 +16,7 @@ export const Cloud = ({
   numOctaves,
   time,
   phaseDuration,
+  weather
 }: Props) => {
   const random = Math.random() * (250 - 100) + 100;
   const back = random;

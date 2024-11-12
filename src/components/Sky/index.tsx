@@ -1,7 +1,6 @@
 import React, { FC, ReactNode, useReducer } from "react";
 import styles from "./Sky.module.scss";
 import { AppState, reducer } from "../../reducer";
-import { emptyTimeEventTimes } from "src/models/models";
 import { Cloud } from "../Cloud";
 
 type Props = {
@@ -15,7 +14,6 @@ export const Sky: FC<Props> = ({
   time,
   phaseDuration,
   weather,
-  children,
 }: Props) => {
   const animatePhase = {
     transition: `opacity ${phaseDuration}s linear`,
@@ -37,7 +35,7 @@ export const Sky: FC<Props> = ({
   let cloudNum = 0;
   switch (weather) {
     case "clear":
-      cloudNum = 0;
+      cloudNum = 1;
       break;
 
     case "clouds":
@@ -75,7 +73,7 @@ export const Sky: FC<Props> = ({
       <div style={{ ...animatePhase, opacity: time === 'dawn'? 1: 0 }} className={`${styles.dawn}`}></div>
 
       {Array.from({length: cloudNum}, (_, index) => (
-        <Cloud seedNumber={7} numOctaves={5} time={time} phaseDuration={10} />
+        <Cloud weather={weather} seedNumber={5} numOctaves={5} time={time} phaseDuration={10} />
       ))}
     </div>
   );
