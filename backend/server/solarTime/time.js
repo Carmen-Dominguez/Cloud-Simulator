@@ -76,10 +76,8 @@ class Timer {
   }
 
   createNamedSolarCronJobs(cronStrings, action) {
-    console.log("create dynamic cron jobs", cronStrings);
     cronStrings.forEach((str, index) => {
       this.cronJobTimes[index] = cron.schedule(str, () => {
-        console.log("cron job", str);
         action();
         this.cronJobTimes[index].stop();
         this.cronJobTimes[index] = null;
