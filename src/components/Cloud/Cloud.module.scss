@@ -1,6 +1,10 @@
 @keyframes move {
-  0% {left: calc(0% - 300px);}
-  100% {left: calc(100vw - 790px);}
+  0% {
+    transform: translateX(-100%); 
+  }
+  100% {
+    transform: translateX(100vw);
+  }
 }
 
 @mixin transition {
@@ -17,7 +21,7 @@
   position: absolute;
   // top: 5vh;
   // left: 0;
-  animation: move 20s infinite;
+  animation: move 20s linear infinite;
   animation-direction: alternate;
   // @include transition();
 }
