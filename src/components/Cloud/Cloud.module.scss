@@ -15,8 +15,8 @@
   height: 275px;
   border-radius: 50%;
   position: absolute;
-  top: 5vh;
-  left: calc(0% - 300px);
+  // top: 5vh;
+  // left: 0;
   animation: move 20s infinite;
   animation-direction: alternate;
   // @include transition();
@@ -25,18 +25,18 @@
 .day {
   .cloudBack {
     filter: url(#filter-back);
-    box-shadow: 300px 300px 30px -20px #fff;
+    box-shadow: 0px 300px 30px -20px #fff;
   }
 
   .cloudMid {
     filter: url(#filter-mid);
-    box-shadow: 300px 340px 70px -60px #9ea8b3;
+    box-shadow: 0px 340px 70px -60px #9ea8b3;
     opacity: 0.5;
   }
 
   .cloudFront {
     filter: url(#filter-front);
-    box-shadow: 300px 370px 60px -100px #000000;
+    box-shadow: 0px 370px 60px -100px #000000;
     opacity: 0.3;
   }
 }
@@ -44,19 +44,19 @@
 .dusk {
   .cloudBack {
     filter: url(#filter-back);
-    box-shadow: 300px 300px 30px -20px #e5987e;
+    box-shadow: 0px 300px 30px -20px #e5987e;
     opacity: 0.5;
   }
 
   .cloudMid {
     filter: url(#filter-mid);
-    box-shadow: 300px 340px 70px -60px #c9667a;
+    box-shadow: 0px 340px 70px -60px #c9667a;
     opacity: 0.5;
   }
 
   .cloudFront {
     filter: url(#filter-front);
-    box-shadow: 300px 370px 60px -100px #403073;
+    box-shadow: 0px 370px 60px -100px #403073;
     opacity: 0.8;
   }
 }
@@ -64,19 +64,19 @@
 .dawn {
   .cloudBack {
     filter: url(#filter-back);
-    box-shadow: 300px 300px 30px -20px #403073;
+    box-shadow: 0px 300px 30px -20px #403073;
     opacity: 0.5;
   }
 
   .cloudMid {
     filter: url(#filter-mid);
-    box-shadow: 300px 340px 70px -60px #c9667a;
+    box-shadow: 0px 340px 70px -60px #c9667a;
     opacity: 0.8;
   }
 
   .cloudFront {
     filter: url(#filter-front);
-    box-shadow: 300px 370px 60px -100px #e5987e;
+    box-shadow: 0px 370px 60px -100px #e5987e;
     opacity: 0.8;
   }
 }
@@ -84,19 +84,19 @@
 .night {
   .cloudBack {
     filter: url(#filter-back);
-    box-shadow: 300px 300px 30px -20px #adf4f8;
+    box-shadow: 0px 300px 30px -20px #adf4f8;
     opacity: 0.9;
   }
 
   .cloudMid {
     filter: url(#filter-mid);
-    box-shadow: 300px 340px 70px -60px #16465c;
+    box-shadow: 0px 340px 70px -60px #16465c;
     opacity: 0.8;
   }
 
   .cloudFront {
     filter: url(#filter-front);
-    box-shadow: 300px 370px 60px -100px #000000;
+    box-shadow: 0px 370px 60px -100px #000000;
     opacity: 0.8;
   }
 }

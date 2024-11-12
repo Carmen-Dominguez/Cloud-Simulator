@@ -16,11 +16,16 @@ export const Cloud = ({ seedNumber, numOctaves, time, phaseDuration }: Props) =>
   const mid = random - 20;
   const front = random - 40;
 
+  const top = Math.floor(Math.random() * (40 - (-30) + 1)) + (-30);
+  const left = Math.floor(Math.random() * 101);
+
   const animatePhase = {
     transition: `all ${phaseDuration}s linear`,
     WebkitTransition: `all ${phaseDuration}s linear`,
     MozTransition: `all ${phaseDuration}s linear`,
     OTransition: `all ${phaseDuration}s linear`,
+    top: `${top}vh`,
+    left: `${left}%`,
   };
 
   return (

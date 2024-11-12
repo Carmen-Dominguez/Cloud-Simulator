@@ -4,11 +4,12 @@ import { AppState } from "../../reducer";
 
 type Props = {
   time: AppState["TimeState"];
+  weather: AppState["WeatherState"]
   children: ReactNode;
   phaseDuration: number;
 };
 
-export const Sky: FC<Props> = ({ time, phaseDuration, children }: Props) => {
+export const Sky: FC<Props> = ({ time, phaseDuration, weather, children }: Props) => {
   const animatePhase = {
     transition: `opacity ${phaseDuration}s linear`,
     WebkitTransition: `opacity ${phaseDuration}s linear`,
