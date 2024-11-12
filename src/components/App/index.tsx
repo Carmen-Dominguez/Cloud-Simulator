@@ -15,11 +15,12 @@ const socket = io.connect("http://localhost:5173"); //'socket.io-client'
 export default function App() {
   const timer = new Timer();
   const [phase, setPhase] = useState(0);
+  const [weather, setWeather] = useState("");
   const [receiveMessages, setReceiveMessages] = useState([]); // State to store received message
 
   const [state, dispatch] = useReducer(reducer, {
     TimeState: "day",
-    WeatherState: "clear sky",
+    WeatherState: "rain",
     TimeEventTimes: emptyTimeEventTimes,
   } as AppState);
 
@@ -66,11 +67,14 @@ export default function App() {
 
     // get current weather 
     socket.on("current_weather", (data: any) => {
-      console.log("current_weather on server", data);
       setReceiveMessages([...receiveMessages, data]);
       dispatch({
-        WeatherState: data.description,
-      });
+        WeatherPhase: true,
+        WeatherDesc: data[0].main?.toLowerCase(),
+      } as TimeEvent);
+
+      console.log("current_weather from server", data);
+      console.log('current State: ', state);
     });
 
     console.log(receiveMessages);
@@ -96,8 +100,7 @@ export default function App() {
 
   return (
     <div onClick={nextPhase}>
-      <Sky time={state.TimeState} phaseDuration={60}>
-        <Cloud seedNumber={7} numOctaves={5} time={state.TimeState} phaseDuration={60} />
+      <Sky time={state.TimeState} phaseDuration={10} weather={state.WeatherState}>
       </Sky>
     </div>
   );

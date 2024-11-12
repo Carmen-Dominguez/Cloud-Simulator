@@ -1,15 +1,22 @@
-import React, { FC, ReactNode } from "react";
+import React, { FC, ReactNode, useReducer } from "react";
 import styles from "./Sky.module.scss";
-import { AppState } from "../../reducer";
+import { AppState, reducer } from "../../reducer";
+import { emptyTimeEventTimes } from "src/models/models";
+import { Cloud } from "../Cloud";
 
 type Props = {
   time: AppState["TimeState"];
-  weather: AppState["WeatherState"]
+  weather: AppState["WeatherState"];
   children: ReactNode;
   phaseDuration: number;
 };
 
-export const Sky: FC<Props> = ({ time, phaseDuration, weather, children }: Props) => {
+export const Sky: FC<Props> = ({
+  time,
+  phaseDuration,
+  weather,
+  children,
+}: Props) => {
   const animatePhase = {
     transition: `opacity ${phaseDuration}s linear`,
     WebkitTransition: `opacity ${phaseDuration}s linear`,
@@ -24,12 +31,50 @@ export const Sky: FC<Props> = ({ time, phaseDuration, weather, children }: Props
     OTransition: `all ${phaseDuration}s linear`,
   };
 
+  // weather states with clouds
+  let cloudNum = 0;
+  switch (weather) {
+    case "clear":
+      cloudNum = 0;
+      break;
+
+    case "clouds":
+      cloudNum = 3;
+      break;
+
+    case "rain":
+      cloudNum = 5;
+      // weather state should make clouds darker
+      break;
+
+    case "thunderstorm":
+      cloudNum = 5;
+      // weather state should make clouds darkest
+      break;
+
+    case "snow":
+      cloudNum = 5;
+      break;
+
+    case "mist":
+      cloudNum = 1;
+      // weather state should make clouds flatter and 100% length, no movement
+      break;
+
+    default:
+      break;
+  }
+
   return (
-  <div className={`${styles.container}`}>
-    <div style={{...animatePhase, opacity: time === 'day'? 1: 0 }} className={`${styles.day}`}></div>
-    <div style={{...animatePhase, opacity: time === 'dusk'? 1: 0 }} className={`${styles.dusk}`}></div>
-    <div style={time === 'night'? { opacity: 1,...animateNight}: { opacity: 0, backgroundPosition: 'center center' }} className={`${styles.night}`}></div>
-    <div style={{ ...animatePhase, opacity: time === 'dawn'? 1: 0 }} className={`${styles.dawn}`}></div>
-    {children}
-  </div>
-)};
+    <div className={`${styles.container}`}>
+      <div style={{...animatePhase, opacity: time === 'day'? 1: 0 }} className={`${styles.day}`}></div>
+      <div style={{...animatePhase, opacity: time === 'dusk'? 1: 0 }} className={`${styles.dusk}`}></div>
+      <div style={time === 'night'? { opacity: 1,...animateNight}: { opacity: 0, backgroundPosition: 'center center' }} className={`${styles.night}`}></div>
+      <div style={{ ...animatePhase, opacity: time === 'dawn'? 1: 0 }} className={`${styles.dawn}`}></div>
+
+      {Array.from({length: cloudNum}, (_, index) => (
+        <Cloud seedNumber={7} numOctaves={5} time={time} phaseDuration={10} />
+      ))}
+    </div>
+  );
+};

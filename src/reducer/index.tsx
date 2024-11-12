@@ -6,9 +6,15 @@ export const reducer: Reducer<AppState, TimeEvent> = (
   event: TimeEvent
 ) => {
   let TimeState: AppState["TimeState"] = state.TimeState || "day";
-  let WeatherState: AppState["WeatherState"] = state.WeatherState || "clear sky";
+  let WeatherState: AppState["WeatherState"] = state.WeatherState || "rain";
   let Timer: AppState["Timer"] = state.Timer || 10;
   let TimeEventTimes: AppState["TimeEventTimes"] = state.TimeEventTimes || emptyTimeEventTimes;
+
+  console.log('event', event);
+
+  if (event.WeatherPhase) {
+    WeatherState = event.WeatherDesc;
+  }
 
   if (event.TimePhase) {
     switch (state.TimeState) {
@@ -34,6 +40,15 @@ export const reducer: Reducer<AppState, TimeEvent> = (
   }
 
   if (event.TimeEventTimes) TimeEventTimes = event.TimeEventTimes;
+
+  console.log('state before: ',state);
+  console.log('what it should look like: ',{
+    ...state,
+    TimeState,
+    WeatherState,
+    Timer,
+    TimeEventTimes,
+  });
 
   return {
     ...state,
