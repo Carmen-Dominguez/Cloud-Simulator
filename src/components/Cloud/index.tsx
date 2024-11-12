@@ -1,7 +1,6 @@
-import React, {useReducer} from "react";
+import React from "react";
 import styles from "./Cloud.module.scss";
 import { AppState, reducer } from "../../reducer";
-import { emptyTimeEventTimes, Weather } from "src/models/models";
 
 type Props = {
   seedNumber: number;
@@ -9,6 +8,7 @@ type Props = {
   time: AppState["TimeState"];
   phaseDuration: number;
   weather: AppState["WeatherState"];
+  key: number
 };
 
 export const Cloud = ({
@@ -40,6 +40,7 @@ export const Cloud = ({
       <div style={animatePhase} className={`${styles.cloud} ${styles.cloudBack}`}></div>
       <div style={animatePhase} className={`${styles.cloud} ${styles.cloudMid}`}></div>
       <div style={animatePhase} className={`${styles.cloud} ${styles.cloudFront}`}></div>
+
       <svg width="0" height="0">
         <filter id="filter-back">
           <feTurbulence
