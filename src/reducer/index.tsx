@@ -8,54 +8,63 @@ export const reducer: Reducer<AppState, Action> = (
   let TimeState: AppState["TimeState"] = state.TimeState || "day";
   let WeatherState: AppState["WeatherState"] = state.WeatherState || "rain";
   let Timer: AppState["Timer"] = state.Timer || 10;
-  let TimeEventTimes: AppState["TimeEventTimes"] = state.TimeEventTimes || emptyTimeEventTimes;
+  let TimeEventTimes: AppState["TimeEventTimes"] =
+    state.TimeEventTimes || emptyTimeEventTimes;
 
-  console.log('event', event);
-
-  if (event.WeatherPhase) {
-    WeatherState = event.WeatherDesc;
-  }
-
-  if (event.TimePhase) {
-    switch (state.TimeState) {
-      case "day":
-        TimeState = "dusk";
-        break;
-
-      case "dusk":
-        TimeState = "night";
-        break;
-
-      case "night":
-        TimeState = "dawn";
-        break;
-
-      case "dawn":
-        TimeState = "day";
-        break;
-
-      default:
-        TimeState = "day";
-    }
-  }
-
-  if (event.TimeEventTimes) TimeEventTimes = event.TimeEventTimes;
-
-  console.log('state before: ',state);
-  console.log('what it should look like: ',{
+  const emptyState = {
     ...state,
     TimeState,
     WeatherState,
     Timer,
     TimeEventTimes,
-  });
+  };
 
-  return {
-    ...state,
-    TimeState,
-    WeatherState,
-    Timer,
-    TimeEventTimes,
-  } as unknown as AppState;
+  console.log("event reducer: ", event);
+
+  switch (event.Type) {
+    case "PHASE":
+      switch (state.TimeState) {
+        case "day":
+          TimeState = "dusk";
+          return { ...state, TimeState: "dusk" };
+          break;
+
+        case "dusk":
+          TimeState = "night";
+          return { ...state, TimeState: "night" };
+          break;
+
+        case "night":
+          TimeState = "dawn";
+          return { ...state, TimeState: "dawn" };
+          break;
+
+        case "dawn":
+          TimeState = "day";
+          return { ...state, TimeState: "day" };
+          break;
+
+        default:
+          TimeState = "day";
+          return { ...state, TimeState: "day" };
+      }
+      break;
+
+    case "WEATHER":
+      return { ...state, WeatherState: event.WeatherDesc };
+      break;
+
+    case "TIME":
+      return { ...state, TimeEventTimes: event.TimeEventTimes };
+      break;
+
+    case "RESET":
+      return emptyState;
+      break;
+
+    default:
+      throw new Error(`Unknown action type: ${event.Type}`);
+      break;
+  }
 };
 export type { AppState, Action };

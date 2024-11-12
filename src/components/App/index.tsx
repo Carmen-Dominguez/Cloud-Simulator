@@ -15,7 +15,6 @@ const socket = io.connect("http://localhost:5173"); //'socket.io-client'
 export default function App() {
   const timer = new Timer();
   const [phase, setPhase] = useState(0);
-  const [weather, setWeather] = useState("");
   const [receiveMessages, setReceiveMessages] = useState([]); // State to store received message
 
   const [state, dispatch] = useReducer(reducer, {
@@ -41,6 +40,7 @@ export default function App() {
   useEffect(() => {
     timer.getTimes().then((res) => {
       dispatch({
+        Type: 'TIME',
         TimeEventTimes: res.data.results[0] as TimeEventTimes,
       } as Action);
     });
@@ -69,7 +69,7 @@ export default function App() {
     socket.on("current_weather", (data: any) => {
       setReceiveMessages([...receiveMessages, data]);
       dispatch({
-        WeatherPhase: true,
+        Type: 'WEATHER',
         WeatherDesc: data[0].main?.toLowerCase(),
       } as Action);
 
@@ -86,7 +86,7 @@ export default function App() {
 
   // do the phases
   function nextPhase() {
-    dispatch({ TimePhase: true } as Action);
+    dispatch({ Type: 'PHASE' } as Action);
     setPhase(phase === 3 ? 0 : phase + 1);
     sendMessage();
   }

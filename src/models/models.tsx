@@ -14,11 +14,9 @@ export type AppState = {
 };
 
 export type Action = {
-  TimePhase: boolean; // when time moves forward to the next phase
-  NextDay: boolean; // to signify the a new day
-  Timer: number; // how long a timePhase lasts
+  Type: 'TIME' | 'WEATHER' | 'RESET' | 'PHASE' // event that takes place
+  NextDay?: boolean; // to signify the a new day
   TimeEventTimes: TimeEventTimes; // time in day when timePhase occurs
-  WeatherPhase: boolean; // when weather changes
   WeatherDesc: Weather; // what it changes to
 };
 
