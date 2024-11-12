@@ -6,17 +6,21 @@ type Props = {
   seedNumber: number;
   numOctaves: number;
   time: AppState["TimeState"];
-  phaseDuration: number
+  phaseDuration: number;
 };
 
-
-export const Cloud = ({ seedNumber, numOctaves, time, phaseDuration }: Props) => {
+export const Cloud = ({
+  seedNumber,
+  numOctaves,
+  time,
+  phaseDuration,
+}: Props) => {
   const random = Math.random() * (250 - 100) + 100;
   const back = random;
   const mid = random - 20;
   const front = random - 40;
 
-  const top = Math.floor(Math.random() * (40 - (-30) + 1)) + (-30);
+  const top = Math.floor(Math.random() * (40 - -30 + 1)) + -30;
   const left = Math.floor(Math.random() * 101);
 
   const animatePhase = {
@@ -33,7 +37,6 @@ export const Cloud = ({ seedNumber, numOctaves, time, phaseDuration }: Props) =>
       <div style={animatePhase} className={`${styles.cloud} ${styles.cloudBack}`}></div>
       <div style={animatePhase} className={`${styles.cloud} ${styles.cloudMid}`}></div>
       <div style={animatePhase} className={`${styles.cloud} ${styles.cloudFront}`}></div>
-
       <svg width="0" height="0">
         <filter id="filter-back">
           <feTurbulence
@@ -66,6 +69,3 @@ export const Cloud = ({ seedNumber, numOctaves, time, phaseDuration }: Props) =>
     </div>
   );
 };
-function useState(arg0: number): [any, any] {
-  throw new Error("Function not implemented.");
-}
