@@ -38,7 +38,7 @@ class Timer {
 
   formatTimePhases(times) {
     const day = this.addMinutes(this.formatDate(times.date, times.sunrise), 72);
-    const testCron = "35 10 * * *";
+    const testCron = "54 10 * * *";
 
     return [
       this.formatIntoCronSlot(times.date, times.first_light),
@@ -49,7 +49,7 @@ class Timer {
       this.formatIntoCronSlot(times.date, times.sunset),
       // this.formatIntoCronSlot(times.date, times.dusk),
       this.formatIntoCronSlot(times.date, times.last_light),
-      testCron,
+      // testCron,
     ];
   }
 
