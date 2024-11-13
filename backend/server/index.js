@@ -75,14 +75,14 @@ io.on("connection", (socket) => {
   // solarTime.createSolarCronJobs(cromStrings, job);
   solarTime.createNamedSolarCronJobs(cromStrings, job);
 
-  // Emit the received message data to all connected clients for testing
-  // cron.schedule("* * * * *", () => {
-  //   logMessage();
-  //   io.to(socket.id).emit(
-  //     "receive_message",
-  //     `test message ${new Date()}`
-  //   );
-  // });
+  // Emit the weather regularly
+  cron.schedule("*/30 * * * *", () => {
+    weather.getWeatherData().then(res => {
+      weather.setWeather(res.data.weather);
+      console.log('weather cron: ', res.data)
+      io.to(socket.id).emit("current_weather", weather.getWeather())
+    });
+  });
 
   // socket.disconnect();
 });
