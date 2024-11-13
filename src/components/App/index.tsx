@@ -1,11 +1,8 @@
 import React, { useEffect, useReducer, useState } from "react";
-import { Cloud } from "../Cloud";
 import { Sky } from "../Sky";
 import { reducer, AppState, Action } from "../../reducer";
 import { Timer } from "src/api/Timer/Timer";
 import { emptyTimeEventTimes, TimeEventTimes } from "src/models/models";
-import axios from "axios"; // Import axios for API requests
-import { Socket } from "socket.io";
 
 const { io } = require("socket.io-client"); // Import the socket.io client library
 
