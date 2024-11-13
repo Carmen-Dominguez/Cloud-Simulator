@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Cloud.module.scss";
-import { AppState, reducer } from "../../reducer";
+import { AppState } from "../../reducer";
 
 type Props = {
   seedNumber: number;

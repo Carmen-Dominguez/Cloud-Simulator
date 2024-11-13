@@ -69,9 +69,7 @@ export default function App() {
         Type: 'WEATHER',
         WeatherDesc: data[0].main?.toLowerCase(),
       } as Action);
-
       console.log("current_weather from server", data);
-      console.log('current State: ', state);
     });
 
     console.log(receiveMessages);

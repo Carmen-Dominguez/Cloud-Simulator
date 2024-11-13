@@ -19,8 +19,6 @@ export const reducer: Reducer<AppState, Action> = (
     TimeEventTimes,
   };
 
-  console.log("event reducer: ", event);
-
   switch (event.Type) {
     case "PHASE":
       switch (state.TimeState) {

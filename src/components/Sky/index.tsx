@@ -1,6 +1,6 @@
-import React, { FC, ReactNode, useReducer } from "react";
+import React, { FC, ReactNode } from "react";
 import styles from "./Sky.module.scss";
-import { AppState, reducer } from "../../reducer";
+import { AppState } from "../../reducer";
 import { Cloud } from "../Cloud";
 
 type Props = {
