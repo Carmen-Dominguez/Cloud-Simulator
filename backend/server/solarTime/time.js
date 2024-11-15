@@ -38,7 +38,7 @@ class Timer {
 
   formatTimePhases(times) {
     const day = this.addMinutes(this.formatDate(times.date, times.sunrise), 72);
-    const testCron = "54 10 * * *";
+    const testCron = "35 10 * * *";
 
     return [
       this.formatIntoCronSlot(times.date, times.first_light),
@@ -78,6 +78,7 @@ class Timer {
   createNamedSolarCronJobs(cronStrings, action) {
     cronStrings.forEach((str, index) => {
       this.cronJobTimes[index] = cron.schedule(str, () => {
+        console.log("cron job", str);
         action();
         this.cronJobTimes[index].stop();
         this.cronJobTimes[index] = null;

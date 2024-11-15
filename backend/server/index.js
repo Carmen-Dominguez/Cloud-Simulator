@@ -56,13 +56,18 @@ io.on("connection", (socket) => {
   });
 
   solarTime.getTimes().then((res) => {
-    cromStrings = solarTime.formatTimePhases(res.data.results[0])
+    try {
+      cromStrings = solarTime.formatTimePhases(res.data.results[0])
+    } catch(err) {
+      cromStrings = [];
+      console.error(err);
+    }
   });
 
   // get the weather
   weather.getWeatherData().then(res => {
     weather.setWeather(res.data.weather);
-    console.log('weather: ', res.data)
+    console.log('weather: ', res.data.weather)
     io.to(socket.id).emit("current_weather", weather.getWeather())
   });
 
