@@ -14,7 +14,14 @@ const currentDate = `${date.getFullYear()}-${
 }-${date.getDate()}`;
 const solarTime = new Timer(currentDate);
 const weather = new Weather({});
+
+const job = () => {
+  io.to(socket.id).emit("phase_change", true);
+  logMessage();
+};
+
 let cromStrings = [];
+let coordinates = [];
 
 // Define a default port if PORT is not set in .env
 const PORT = process.env.PORT || 5173;
@@ -52,37 +59,34 @@ io.on("connection", (socket) => {
 
   // Listen for "send_message" events from the connected client
   socket.on("send_message", (data) => {
+    coordinates = data.message;
     console.log("Message Received ", data); // Log the received message data
+
+    // get the weather
+    weather.getWeatherData(coordinates).then(res => {
+      weather.setWeather(res?.data?.weather || {});
+      console.log('weather: ', res?.data?.weather)
+      io.to(socket.id).emit("current_weather", weather.getWeather())
+    });
+
+    solarTime.getTimes(coordinates).then((res) => {
+      try {
+        cromStrings = solarTime.formatTimePhases(res.data.results[0])
+      } catch(err) {
+        cromStrings = [];
+        console.error(err);
+      }
+    });
+  
+    // create cron jobs
+    // solarTime.createSolarCronJobs(cromStrings, job);
+    solarTime.createNamedSolarCronJobs(cromStrings, job);
   });
 
-  solarTime.getTimes().then((res) => {
-    try {
-      cromStrings = solarTime.formatTimePhases(res.data.results[0])
-    } catch(err) {
-      cromStrings = [];
-      console.error(err);
-    }
-  });
-
-  // get the weather
-  weather.getWeatherData().then(res => {
-    weather.setWeather(res?.data?.weather || {});
-    console.log('weather: ', res?.data?.weather)
-    io.to(socket.id).emit("current_weather", weather.getWeather())
-  });
-
-  const job = () => {
-    io.to(socket.id).emit("phase_change", true);
-    logMessage();
-  }
-
-  // create cron jobs
-  // solarTime.createSolarCronJobs(cromStrings, job);
-  solarTime.createNamedSolarCronJobs(cromStrings, job);
 
   // Emit the weather regularly
   cron.schedule("*/30 * * * *", () => {
-    weather.getWeatherData().then(res => {
+    weather.getWeatherData(coordinates).then(res => {
       weather.setWeather(res?.data?.weather);
       console.log('weather cron: ', res.data)
       io.to(socket.id).emit("current_weather", weather.getWeather())

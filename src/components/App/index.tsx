@@ -20,11 +20,15 @@ export default function App() {
     TimeEventTimes: emptyTimeEventTimes,
   } as AppState);
 
+  const london = ['51.50853', '-0.12574'];
+  const capeTown = ['-33.92584', '18.42322'];
+  const upington =  ['-28.4478', '21.2561'];
+
   // Function to send a message
   const sendMessage = async (
     sendID = "0",
     receiveID = "phase",
-    message = "wassup"
+    message = upington
   ) => {
     // Emit a socket event with the message details
     socket.emit("send_message", {

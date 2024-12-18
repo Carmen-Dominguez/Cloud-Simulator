@@ -3,19 +3,18 @@ const cron = require("node-cron");
 
 class Timer {
   cronJobTimes = [];
-  london = ['51.50853', '-0.12574'];
-  capeTown = ['-33.92584', '18.42322'];
 
   constructor(currentDate) {
     this.currentDate = currentDate;
   }
 
-  async getTimes() {
+  async getTimes(coordinates) {
+    console.log('getTimes: ', coordinates)
     try {
       const response = await axios.get("https://api.sunrisesunset.io/json", {
         params: {
-          lat: this.capeTown[0], // Cape Town
-          lng: this.capeTown[1],
+          lat: coordinates[0], // Cape Town
+          lng: coordinates[1],
           date_start: this.currentDate,
           date_end: this.currentDate,
         },
