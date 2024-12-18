@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --mode development",
-    "dev": "PORT=3000 react-scripts start ",
+    "dev": "react-scripts start PORT=3000",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
