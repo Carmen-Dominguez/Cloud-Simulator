@@ -73,7 +73,7 @@ export const Sky: FC<Props> = ({
       <div style={{ ...animatePhase, opacity: time === 'dawn'? 1: 0 }} className={`${styles.dawn}`}></div>
 
       {Array.from({length: cloudNum}, (_, index) => (
-        <Cloud key={index} weather={weather} seedNumber={5} numOctaves={5} time={time} phaseDuration={10} />
+        <Cloud key={index} weather={weather} seedNumber={5} numOctaves={5} time={time} phaseDuration={phaseDuration} />
       ))}
     </div>
   );
