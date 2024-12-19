@@ -18,6 +18,7 @@ export default function App() {
     TimeState: "day",
     WeatherState: "rain",
     TimeEventTimes: emptyTimeEventTimes,
+    Timer: 10,
   } as AppState);
 
   const london = ['51.50853', '-0.12574'];
@@ -84,8 +85,9 @@ export default function App() {
   }, [socket, receiveMessages]); // Empty dependency array ensures this runs only once when the component mounts
 
   // do the phases
-  function nextPhase(data?) {
-    dispatch({ Type: 'PHASE', PhaseTo: data.phaseTo?.toLowerCase() } as Action);
+  function nextPhase(data?: { phaseTo: string; phaseDuration: number; }) {
+    dispatch({ Type: 'PHASE', PhaseTo: data.phaseTo?.toLowerCase() || null } as Action);
+    dispatch({Type: 'TIMER', PhaseDuration: data?.phaseDuration || 10 } as Action)
     setPhase(phase === 3 ? 0 : phase + 1);
     sendMessage();
   }
@@ -99,7 +101,7 @@ export default function App() {
 
   return (
     <div onClick={nextPhase}>
-      <Sky time={state.TimeState} phaseDuration={10} weather={state.WeatherState}>
+      <Sky time={state.TimeState} phaseDuration={state.Timer} weather={state.WeatherState}>
       </Sky>
     </div>
   );

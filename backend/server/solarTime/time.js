@@ -39,7 +39,7 @@ class Timer {
 
   formatTimePhases(times) {
     const day = this.addMinutes(this.formatDate(times.date, times.sunrise), 72);
-    const testCron = "6 13 * * *";
+    const testCron = "32 13 * * *";
 
     return [
       { 

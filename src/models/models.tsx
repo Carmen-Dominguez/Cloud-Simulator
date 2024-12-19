@@ -16,11 +16,12 @@ export type AppState = {
 };
 
 export type Action = {
-  Type: 'TIME' | 'WEATHER' | 'RESET' | 'PHASE' // event that takes place
+  Type: 'TIME' | 'WEATHER' | 'RESET' | 'PHASE' | 'TIMER' // event that takes place
   NextDay?: boolean; // to signify the a new day
   TimeEventTimes: TimeEventTimes; // time in day when timePhase occurs
   WeatherDesc: Weather; // what it changes to
   PhaseTo: TimeState;
+  PhaseDuration: number;
 };
 
 export type TimeEventTimes = {

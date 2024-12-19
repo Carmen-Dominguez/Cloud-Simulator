@@ -59,6 +59,10 @@ export const reducer: Reducer<AppState, Action> = (
     case "TIME":
       return { ...state, TimeEventTimes: event.TimeEventTimes };
       break;
+    
+    case "TIMER":
+      return { ...state, Timer: event.PhaseDuration };
+      break;
 
     case "RESET":
       return emptyState;
