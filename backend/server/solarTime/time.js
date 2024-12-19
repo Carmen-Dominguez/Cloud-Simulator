@@ -55,7 +55,7 @@ class Timer {
         ),
         cron: this.formatIntoCronSlot(times.date, times.first_light),
       },
-      { cron: this.formatIntoCronSlot(times.date, times.dawn) },
+      // { cron: this.formatIntoCronSlot(times.date, times.dawn) },
       {
         phaseTo: "day",
         phaseDuration: this.getTransitionTime(
@@ -64,7 +64,7 @@ class Timer {
         ),
         cron: this.formatIntoCronSlot(times.date, times.sunrise),
       },
-      { cron: this.formatIntoCronSlot(times.date, day) },
+      // { cron: this.formatIntoCronSlot(times.date, day) },
       {
         phaseTo: "dusk",
         phaseDuration: this.getTransitionTime(
@@ -73,7 +73,7 @@ class Timer {
         ),
         cron: this.formatIntoCronSlot(times.date, times.golden_hour),
       },
-      { cron: this.formatIntoCronSlot(times.date, times.sunset) },
+      // { cron: this.formatIntoCronSlot(times.date, times.sunset) },
       {
         phaseTo: "night",
         phaseDuration: this.getTransitionTime(
@@ -82,7 +82,7 @@ class Timer {
         ),
         cron: this.formatIntoCronSlot(times.date, times.dusk),
       },
-      { cron: this.formatIntoCronSlot(times.date, times.last_light) },
+      // { cron: this.formatIntoCronSlot(times.date, times.last_light) },
     ];
   }
 
