@@ -86,7 +86,7 @@ export default function App() {
 
   // do the phases
   function nextPhase(data?: { phaseTo: string; phaseDuration: number; }) {
-    dispatch({ Type: 'PHASE', PhaseTo: data.phaseTo?.toLowerCase() || null } as Action);
+    dispatch({ Type: 'PHASE', PhaseTo: data?.phaseTo?.toLowerCase() || null } as Action);
     dispatch({Type: 'TIMER', PhaseDuration: data?.phaseDuration || 10 } as Action)
     setPhase(phase === 3 ? 0 : phase + 1);
     sendMessage();
