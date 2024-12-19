@@ -21,30 +21,34 @@ export const reducer: Reducer<AppState, Action> = (
 
   switch (event.Type) {
     case "PHASE":
-      switch (state.TimeState) {
-        case "day":
-          TimeState = "dusk";
-          return { ...state, TimeState: "dusk" };
-          break;
-
-        case "dusk":
-          TimeState = "night";
-          return { ...state, TimeState: "night" };
-          break;
-
-        case "night":
-          TimeState = "dawn";
-          return { ...state, TimeState: "dawn" };
-          break;
-
-        case "dawn":
-          TimeState = "day";
-          return { ...state, TimeState: "day" };
-          break;
-
-        default:
-          TimeState = "day";
-          return { ...state, TimeState: "day" };
+      if (event.PhaseTo) {
+        return { ...state, TimeState: event.PhaseTo };
+      } else {
+        switch (state.TimeState) {
+          case "day":
+            TimeState = "dusk";
+            return { ...state, TimeState: "dusk" };
+            break;
+  
+          case "dusk":
+            TimeState = "night";
+            return { ...state, TimeState: "night" };
+            break;
+  
+          case "night":
+            TimeState = "dawn";
+            return { ...state, TimeState: "dawn" };
+            break;
+  
+          case "dawn":
+            TimeState = "day";
+            return { ...state, TimeState: "day" };
+            break;
+  
+          default:
+            TimeState = "day";
+            return { ...state, TimeState: "day" };
+        }  
       }
       break;
 

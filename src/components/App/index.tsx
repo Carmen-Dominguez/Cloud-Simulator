@@ -63,7 +63,7 @@ export default function App() {
     socket.on("phase_change", (data: any) => {
       console.log("phase_change on server", data);
       setReceiveMessages([...receiveMessages, data]);
-      nextPhase();
+      nextPhase(data);
     });
 
     // get current weather 
@@ -84,8 +84,8 @@ export default function App() {
   }, [socket, receiveMessages]); // Empty dependency array ensures this runs only once when the component mounts
 
   // do the phases
-  function nextPhase() {
-    dispatch({ Type: 'PHASE' } as Action);
+  function nextPhase(data?) {
+    dispatch({ Type: 'PHASE', PhaseTo: data.phaseTo?.toLowerCase() } as Action);
     setPhase(phase === 3 ? 0 : phase + 1);
     sendMessage();
   }

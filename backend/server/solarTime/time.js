@@ -39,10 +39,14 @@ class Timer {
 
   formatTimePhases(times) {
     const day = this.addMinutes(this.formatDate(times.date, times.sunrise), 72);
-    const testCron = "33 20 * * *";
+    const testCron = "6 13 * * *";
 
     return [
-      { cron: testCron },
+      { 
+        phaseTo: "dusk",
+        cron: testCron,
+        phaseDuration: 25,
+      },
       {
         phaseTo: "dawn",
         phaseDuration: this.getTransitionTime(

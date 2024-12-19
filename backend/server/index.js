@@ -78,7 +78,7 @@ io.on("connection", (socket) => {
 
   const job = (fromJob) => {
     console.log('fromJob', fromJob);
-    io.to(socket.id).emit("phase_change", true);
+    io.to(socket.id).emit("phase_change", fromJob);
     logMessage();
   }
 
