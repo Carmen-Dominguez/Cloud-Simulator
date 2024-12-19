@@ -73,15 +73,20 @@ class Timer {
         ),
         cron: this.formatIntoCronSlot(times.date, times.golden_hour),
       },
-      // { cron: this.formatIntoCronSlot(times.date, times.sunset) },
-      {
-        phaseTo: "night",
+      { phaseTo: "night",
         phaseDuration: this.getTransitionTime(
-          { day: times.date, time: times.dusk },
+          { day: times.date, time: times.sunset },
           { day: times.date, time: times.last_light }
-        ),
-        cron: this.formatIntoCronSlot(times.date, times.dusk),
-      },
+        ), 
+        cron: this.formatIntoCronSlot(times.date, times.sunset) },
+      // {
+      //   phaseTo: "night",
+      //   phaseDuration: this.getTransitionTime(
+      //     { day: times.date, time: times.dusk },
+      //     { day: times.date, time: times.last_light }
+      //   ),
+      //   cron: this.formatIntoCronSlot(times.date, times.dusk),
+      // },
       // { cron: this.formatIntoCronSlot(times.date, times.last_light) },
     ];
   }
