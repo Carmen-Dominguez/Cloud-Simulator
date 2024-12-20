@@ -5,6 +5,7 @@ class Timer {
   cronJobTimes = [];
   london = ['51.50853', '-0.12574'];
   capeTown = ['-33.92584', '18.42322'];
+  upington =  ['-28.4478', '21.2561'];
 
   constructor(currentDate) {
     this.currentDate = currentDate;
@@ -14,8 +15,8 @@ class Timer {
     try {
       const response = await axios.get("https://api.sunrisesunset.io/json", {
         params: {
-          lat: this.capeTown[0], // Cape Town
-          lng: this.capeTown[1],
+          lat: this.upington[0], // Cape Town
+          lng: this.upington[1],
           date_start: this.currentDate,
           date_end: this.currentDate,
         },
@@ -38,18 +39,55 @@ class Timer {
 
   formatTimePhases(times) {
     const day = this.addMinutes(this.formatDate(times.date, times.sunrise), 72);
-    const testCron = "16 16 * * *";
+    const testCron = "32 13 * * *";
 
     return [
-      this.formatIntoCronSlot(times.date, times.first_light),
-      // this.formatIntoCronSlot(times.date, times.dawn),
-      this.formatIntoCronSlot(times.date, times.sunrise),
-      this.formatIntoCronSlot(times.date, day),
-      this.formatIntoCronSlot(times.date, times.golden_hour),
-      this.formatIntoCronSlot(times.date, times.sunset),
-      // this.formatIntoCronSlot(times.date, times.dusk),
-      this.formatIntoCronSlot(times.date, times.last_light),
-      testCron,
+      { 
+        phaseTo: "dusk",
+        cron: testCron,
+        phaseDuration: 25,
+      },
+      {
+        phaseTo: "dawn",
+        phaseDuration: this.getTransitionTime(
+          { day: times.date, time: times.first_light },
+          { day: times.date, time: times.dawn }
+        ),
+        cron: this.formatIntoCronSlot(times.date, times.first_light),
+      },
+      // { cron: this.formatIntoCronSlot(times.date, times.dawn) },
+      {
+        phaseTo: "day",
+        phaseDuration: this.getTransitionTime(
+          { day: times.date, time: times.sunrise },
+          { day: times.date, time: day }
+        ),
+        cron: this.formatIntoCronSlot(times.date, times.sunrise),
+      },
+      // { cron: this.formatIntoCronSlot(times.date, day) },
+      {
+        phaseTo: "dusk",
+        phaseDuration: this.getTransitionTime(
+          { day: times.date, time: times.golden_hour },
+          { day: times.date, time: times.dusk }
+        ),
+        cron: this.formatIntoCronSlot(times.date, times.golden_hour),
+      },
+      { phaseTo: "night",
+        phaseDuration: this.getTransitionTime(
+          { day: times.date, time: times.sunset },
+          { day: times.date, time: times.last_light }
+        ), 
+        cron: this.formatIntoCronSlot(times.date, times.sunset) },
+      // {
+      //   phaseTo: "night",
+      //   phaseDuration: this.getTransitionTime(
+      //     { day: times.date, time: times.dusk },
+      //     { day: times.date, time: times.last_light }
+      //   ),
+      //   cron: this.formatIntoCronSlot(times.date, times.dusk),
+      // },
+      // { cron: this.formatIntoCronSlot(times.date, times.last_light) },
     ];
   }
 
@@ -58,16 +96,26 @@ class Timer {
   }
 
   formatIntoCronSlot(day, time) {
+    const formattedTime = this.getHourMinute(day, time);
+    return `${formattedTime.minute} ${formattedTime.hour} * * *`;
+  }
+
+  getHourMinute(day, time) {
     const date = this.formatDate(day, time);
     const hour = date.getHours();
     const minute = date.getMinutes();
 
-    console.log(time, date, hour, minute);
-    return `${minute} ${hour} * * *`;
+    return {hour, minute};
   }
 
   getTransitionTime(first, next) {
-    return Math.abs(first - next) / 1000;
+    const firstTime = this.getHourMinute(first.day, first.time);
+    const nextTime = this.getHourMinute(next.day, next.time);
+
+    const totalSeconds1 = firstTime.hour * 3600 + firstTime.minute * 60;
+    const totalSeconds2 = nextTime.hour * 3600 + nextTime.minute * 60;
+
+    return Math.abs(totalSeconds1 - totalSeconds2);
   }
 
   addMinutes(date, minutes) {
@@ -76,10 +124,11 @@ class Timer {
   }
 
   createNamedSolarCronJobs(cronStrings, action) {
+    console.log('cronstrings', cronStrings);
     cronStrings.forEach((str, index) => {
-      this.cronJobTimes[index] = cron.schedule(str, () => {
+      this.cronJobTimes[index] = cron.schedule(str.cron, () => {
         console.log("cron job", str);
-        action();
+        action(str);
         this.cronJobTimes[index].stop();
         this.cronJobTimes[index] = null;
       });
