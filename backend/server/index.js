@@ -58,8 +58,13 @@ io.on("connection", (socket) => {
   solarTime.getTimes().then((res) => {
     try {
       cromStrings = solarTime.formatTimePhases(res.data.results[0])
+      solarTime.setCromJobTimes(cromStrings);
+      // create cron jobs
+  // solarTime.createSolarCronJobs(cromStrings, job);
+  solarTime.createNamedSolarCronJobs(solarTime.getCronJobTimes(), job);
     } catch(err) {
       cromStrings = [];
+      solarTime.setCromJobTimes([]);
       console.error(err);
     }
   });
@@ -71,14 +76,11 @@ io.on("connection", (socket) => {
     io.to(socket.id).emit("current_weather", weather.getWeather())
   });
 
-  const job = () => {
-    io.to(socket.id).emit("phase_change", true);
+  const job = (fromJob) => {
+    console.log('fromJob', fromJob);
+    io.to(socket.id).emit("phase_change", fromJob);
     logMessage();
   }
-
-  // create cron jobs
-  // solarTime.createSolarCronJobs(cromStrings, job);
-  solarTime.createNamedSolarCronJobs(cromStrings, job);
 
   // Emit the weather regularly
   cron.schedule("*/30 * * * *", () => {
