@@ -11,12 +11,12 @@ class Timer {
     this.currentDate = currentDate;
   }
 
-  async getTimes() {
+  async getTimes(lat, lon) {
     try {
       const response = await axios.get("https://api.sunrisesunset.io/json", {
         params: {
-          lat: this.upington[0], // Cape Town
-          lng: this.upington[1],
+          lat: lat || this.upington[0], // Cape Town
+          lng: lon || this.upington[1],
           date_start: this.currentDate,
           date_end: this.currentDate,
         },

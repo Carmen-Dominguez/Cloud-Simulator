@@ -7,9 +7,9 @@ class SolarTimeService {
         this.timer = new Timer(currentDate);
     }
 
-    async initializeSolarPhases() {
+    async initializeSolarPhases(lat, lon) {
         try {
-            const response = await this.timer.getTimes();
+            const response = await this.timer.getTimes(lat, lon);
             const phases = response.data.results[0];
             const cronStrings = this.timer.formatTimePhases(phases);
             this.timer.setCromJobTimes(cronStrings);

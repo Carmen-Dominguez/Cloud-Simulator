@@ -65,9 +65,9 @@ io.on("connection", (socket) => {
   });
 
   // get the weather
-  weather.getWeatherData().then(res => {
+  weather.getWeatherData(socket.location.lat, socket.location.lon).then(res => {
     weather.setWeather(res?.data?.weather || {});
-    console.log('weather: ', res?.data?.weather)
+    console.log('weather: ', res?.data)
     io.to(socket.id).emit("current_weather", weather.getWeather())
   });
 
@@ -79,7 +79,7 @@ io.on("connection", (socket) => {
 
   // Emit the weather regularly
   cron.schedule("*/30 * * * *", () => {
-    weather.getWeatherData().then(res => {
+    weather.getWeatherData(socket.location.lat, socket.location.lon).then(res => {
       weather.setWeather(res?.data?.weather);
       console.log('weather cron: ', res.data)
       io.to(socket.id).emit("current_weather", weather.getWeather())

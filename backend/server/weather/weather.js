@@ -11,14 +11,14 @@ class Weather {
     this.weatherData = currentWeather;
   }
 
-  async getWeatherData() {
+  async getWeatherData(lat, lon) {
     try {
       const response = await axios.get(
         "https://api.openweathermap.org/data/2.5/weather",
         {
           params: {
-            lat: this.upington[0], // Cape Town
-            lon: this.upington[1],
+            lat: lat || this.upington[0],
+            lon: lon || this.upington[1],
             appid: `${process.env.WEATHERAPI}`,
             units: "metric"
           },

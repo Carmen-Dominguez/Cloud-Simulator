@@ -17,21 +17,28 @@ function initializeSocket(server) {
     io.on('connection', async (socket) => {
         console.log('User connected', socket.id);
 
-        // Initialize weather and solar time data for new connection
-        try {
-            const weatherData = await weatherService.getCurrentWeather();
-            io.to(socket.id).emit('current_weather', weatherData);
+        // Store location per socket, default to Upington (optional, but not used for initial fetch)
+        socket.location = { lat: '-28.4478', lon: '21.2561' }; // Default location: Upington
 
-            const solarPhases = await solarTimeService.initializeSolarPhases();
-            solarTimeService.setupPhaseJobs(io, socket.id);
-            solarTimeService.setupSolarCronJobs(io, socket.id);
+        socket.on('set_location', async ({ lat, lon }) => {
+            socket.location = { lat, lon };
+            console.log(`Location set for socket ${socket.id}:`, socket.location);
 
-        } catch (error) {
-            console.error('Error initializing client data:', error);
-        }
+            // Now fetch and emit weather/solar data for the new location
+            try {
+                const weatherData = await weatherService.getCurrentWeather(lat, lon);
+                io.to(socket.id).emit('current_weather', weatherData);
+                console.log('Weather data emitted for socket', weatherData);
+
+                const solarPhases = await solarTimeService.initializeSolarPhases(lat, lon);
+                solarTimeService.setupPhaseJobs(io, socket.id, lat, lon);
+            } catch (error) {
+                console.error('Error initializing client data:', error);
+            }
+        });
 
         socket.on('send_message', (data) => {
-            console.log('Message Received', data);
+            console.log('Message Received', new Date().toISOString(), data);
         });
 
         socket.on('disconnect', () => {

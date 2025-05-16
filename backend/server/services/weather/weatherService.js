@@ -5,9 +5,9 @@ class WeatherService {
         this.weatherClient = new Weather({});
     }
 
-    async getCurrentWeather() {
+    async getCurrentWeather(lat, lon) {
         try {
-            const response = await this.weatherClient.getWeatherData();
+            const response = await this.weatherClient.getWeatherData(lat, lon);
             const weatherData = response?.data?.weather || {};
             this.weatherClient.setWeather(weatherData);
             return this.weatherClient.getWeather();
