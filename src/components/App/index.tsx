@@ -24,12 +24,14 @@ export default function App() {
   const london = ['51.50853', '-0.12574'];
   const capeTown = ['-33.92584', '18.42322'];
   const upington =  ['-28.4478', '21.2561'];
+  const newYork = ['40.712776', '-74.005974'];
+  const singapore = ['1.3521', '103.8198'];
 
   // Function to send a message
   const sendMessage = async (
     sendID = "0",
     receiveID = "phase",
-    message = upington
+    message = singapore
   ) => {
     // Emit a socket event with the message details
     socket.emit("send_message", {
@@ -37,6 +39,10 @@ export default function App() {
       receiverId: receiveID, // ID of the receiver
       message: message, // The actual message content
     });
+  };
+
+  const sendLocation = (lat: string, lon: string) => {
+    socket.emit("set_location", { lat, lon });
   };
 
   useEffect(() => {
@@ -83,6 +89,10 @@ export default function App() {
       socket.off("receive_message cleanup");
     };
   }, [socket, receiveMessages]); // Empty dependency array ensures this runs only once when the component mounts
+
+  useEffect(() => {
+    sendLocation(singapore[0], singapore[1]);
+  }, []);
 
   // do the phases
   function nextPhase(data?: { phaseTo: string; phaseDuration: number; }) {
