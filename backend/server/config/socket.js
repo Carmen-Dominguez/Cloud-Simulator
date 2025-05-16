@@ -24,6 +24,8 @@ function initializeSocket(server) {
 
             const solarPhases = await solarTimeService.initializeSolarPhases();
             solarTimeService.setupPhaseJobs(io, socket.id);
+            solarTimeService.setupSolarCronJobs(io, socket.id);
+
         } catch (error) {
             console.error('Error initializing client data:', error);
         }
