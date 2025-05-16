@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Cloud.module.scss";
 import { AppState } from "../../reducer";
 
@@ -18,6 +18,22 @@ export const Cloud = ({
   phaseDuration,
   weather
 }: Props) => {
+  const [perspective, setPerspective] = useState(1000);
+  
+  useEffect(() => {
+    const handleScroll = (e: WheelEvent) => {
+      e.preventDefault();
+      
+      setPerspective(prev => {
+        const newPerspective = prev + (e.deltaY * 10);
+        return Math.min(Math.max(500, newPerspective), 2000);
+      });
+    };
+
+    window.addEventListener('wheel', handleScroll, { passive: false });
+    return () => window.removeEventListener('wheel', handleScroll);
+  }, []);
+
   const random = Math.random() * (250 - 100) + 100;
   const back = random;
   const mid = random - 20;
@@ -27,16 +43,18 @@ export const Cloud = ({
   const left = Math.floor(Math.random() * 101);
 
   const animatePhase = {
-    transition: `all ${phaseDuration}s linear`,
-    WebkitTransition: `all ${phaseDuration}s linear`,
-    MozTransition: `all ${phaseDuration}s linear`,
-    OTransition: `all ${phaseDuration}s linear`,
+    // transition: `all ${phaseDuration}s linear`,
+    // WebkitTransition: `all ${phaseDuration}s linear`,
+    // MozTransition: `all ${phaseDuration}s linear`,
+    // OTransition: `all ${phaseDuration}s linear`,
     top: `${top}vh`,
     left: `${left}%`,
+    transform: `translateZ(${perspective}px)`,
+    transformStyle: 'preserve-3d',
   };
 
   return (
-    <div className={styles[time]}>
+    <div className={styles[time]} style={{ perspective: '1000px' }}>
       <div style={animatePhase} className={`${styles.cloud} ${styles.cloudBack}`}></div>
       <div style={animatePhase} className={`${styles.cloud} ${styles.cloudMid}`}></div>
       <div style={animatePhase} className={`${styles.cloud} ${styles.cloudFront}`}></div>
