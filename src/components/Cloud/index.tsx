@@ -43,14 +43,14 @@ export const Cloud = ({
   const left = Math.floor(Math.random() * 101);
 
   const animatePhase = {
-    // transition: `all ${phaseDuration}s linear`,
-    // WebkitTransition: `all ${phaseDuration}s linear`,
-    // MozTransition: `all ${phaseDuration}s linear`,
-    // OTransition: `all ${phaseDuration}s linear`,
+    transition: `all ${phaseDuration}s linear`,
+    WebkitTransition: `all ${phaseDuration}s linear`,
+    MozTransition: `all ${phaseDuration}s linear`,
+    OTransition: `all ${phaseDuration}s linear`,
     top: `${top}vh`,
     left: `${left}%`,
     transform: `translateZ(${perspective}px)`,
-    transformStyle: 'preserve-3d',
+    transformStyle: 'preserve-3d' as 'preserve-3d',
   };
 
   return (

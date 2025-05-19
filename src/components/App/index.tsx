@@ -3,6 +3,8 @@ import { Sky } from "../Sky";
 import { reducer, AppState, Action } from "../../reducer";
 import { Timer } from "src/api/Timer/Timer";
 import { emptyTimeEventTimes, TimeEventTimes } from "src/models/models";
+import { Sky3D } from "src/components/Sky3D";
+import { Dummy } from "../Sky3D/dummy";
 
 const { io } = require("socket.io-client"); // Import the socket.io client library
 
@@ -110,9 +112,11 @@ export default function App() {
   }
 
   return (
-    <div onClick={nextPhase}>
-      <Sky time={state.TimeState} phaseDuration={state.Timer} weather={state.WeatherState}>
-      </Sky>
+    <div onClick={() => {}}>
+      {/* <Sky time={state.TimeState} phaseDuration={state.Timer} weather={state.WeatherState}>
+      </Sky> */}
+      <Sky3D time={state.TimeState} phaseDuration={state.Timer} weather={state.WeatherState} />
+      {/* <Dummy /> */}
     </div>
   );
 }
