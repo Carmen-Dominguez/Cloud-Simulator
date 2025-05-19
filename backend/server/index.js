@@ -31,6 +31,11 @@ app.get('/', (_req, res) => {
     res.send('<h1>Cloud Simulator API</h1>');
 });
 
+app.get('/weather', (_req, res) => {
+  console.log('get weather: ', weather.getWeather());
+  res.json(weather.getWeather());
+});
+
 // Create HTTP server
 const server = http.createServer(app);
 
@@ -66,7 +71,7 @@ io.on("connection", (socket) => {
 
   // get the weather
   weather.getWeatherData(socket.location.lat, socket.location.lon).then(res => {
-    weather.setWeather(res?.data?.weather || {});
+    weather.setWeather(res?.data || {});
     console.log('weather: ', res?.data)
     io.to(socket.id).emit("current_weather", weather.getWeather())
   });
@@ -80,7 +85,7 @@ io.on("connection", (socket) => {
   // Emit the weather regularly
   cron.schedule("*/30 * * * *", () => {
     weather.getWeatherData(socket.location.lat, socket.location.lon).then(res => {
-      weather.setWeather(res?.data?.weather);
+      weather.setWeather(res?.data);
       console.log('weather cron: ', res.data)
       io.to(socket.id).emit("current_weather", weather.getWeather())
     });
