@@ -17,8 +17,8 @@ class Weather {
         "https://api.openweathermap.org/data/2.5/weather",
         {
           params: {
-            lat: lat || this.upington[0],
-            lon: lon || this.upington[1],
+            lat: lat || this.capeTown[0],
+            lon: lon || this.capeTown[1],
             appid: `${process.env.WEATHERAPI}`,
             units: "metric"
           },

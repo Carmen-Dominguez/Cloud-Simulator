@@ -110,8 +110,8 @@ export default function App() {
   }
 
   return (
-    <div onClick={nextPhase}>
-      <Sky time={state.TimeState} phaseDuration={state.Timer} weather={state.WeatherState}>
+    <div onClick={() => nextPhase()}>
+      <Sky time={state.TimeState} phaseDuration={state.Timer} weather={state.WeatherState} children={<div>Hello</div>}>
       </Sky>
     </div>
   );
