@@ -29,11 +29,27 @@ app.use(express.json());
 // Basic route
 app.get('/', (_req, res) => {
     res.send('<h1>Cloud Simulator API</h1>');
+    
 });
 
 app.get('/weather', (_req, res) => {
-  console.log('get weather: ', weather.getWeather());
+  console.log('get weather no coordinates: ', weather.getWeather());
   res.json(weather.getWeather());
+});
+
+
+app.get('/weatherLatLon', async (req, res) => {
+  const { lat, lon } = req.query;
+  console.log('get weather with coordinates: ', lat, lon);
+
+  try {
+    const weatherData = await weather.getWeatherData(lat, lon);
+    weather.setWeather(weatherData?.data || {});
+    res.json(weather.getWeather());
+  } catch (error) {
+    console.error('Error fetching weather:', error);
+    res.status(500).json({ error: 'Failed to fetch weather data' });
+  }
 });
 
 // Create HTTP server

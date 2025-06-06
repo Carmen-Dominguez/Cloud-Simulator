@@ -18,7 +18,7 @@ function initializeSocket(server) {
         console.log('User connected', socket.id);
 
         // Store location per socket, default to Cape Town (optional, but not used for initial fetch)
-        socket.location = { lat: '-33.9249', lon: '18.4241' }; // Default location: Cape Town
+        socket.location = { lat: '35.6895', lon: '139.6917' }; // Default location: Tokyo
 
         socket.on('set_location', async ({ lat, lon }) => {
             socket.location = { lat, lon };

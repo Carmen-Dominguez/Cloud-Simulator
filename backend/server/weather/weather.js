@@ -5,7 +5,8 @@ class Weather {
   weatherData = {};
   london = ['51.50853', '-0.12574'];
   capeTown = ['-33.92584', '18.42322'];
-  upington =  ['-28.4478', '21.2561']
+  upington =  ['-28.4478', '21.2561'];
+  tokyo = ['35.6895', '139.6917'];
 
   constructor(currentWeather) {
     this.weatherData = currentWeather;
@@ -17,8 +18,8 @@ class Weather {
         "https://api.openweathermap.org/data/2.5/weather",
         {
           params: {
-            lat: lat || this.capeTown[0],
-            lon: lon || this.capeTown[1],
+            lat: lat || this.tokyo[0],
+            lon: lon || this.tokyo[1],
             appid: `${process.env.WEATHERAPI}`,
             units: "metric"
           },

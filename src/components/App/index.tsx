@@ -26,12 +26,13 @@ export default function App() {
   const upington =  ['-28.4478', '21.2561'];
   const newYork = ['40.712776', '-74.005974'];
   const singapore = ['1.3521', '103.8198'];
+  const tokyo = ['35.6895', '139.6917'];
 
   // Function to send a message
   const sendMessage = async (
     sendID = "0",
     receiveID = "phase",
-    message = singapore
+    message = tokyo
   ) => {
     // Emit a socket event with the message details
     socket.emit("send_message", {
@@ -111,7 +112,7 @@ export default function App() {
 
   return (
     <div onClick={() => nextPhase()}>
-      <Sky time={state.TimeState} phaseDuration={state.Timer} weather={state.WeatherState} children={<div>Hello</div>}>
+      <Sky time={state.TimeState} phaseDuration={state.Timer} weather={state.WeatherState}>
       </Sky>
     </div>
   );
